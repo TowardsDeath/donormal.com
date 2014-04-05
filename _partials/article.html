@@ -1,0 +1,35 @@
+<article class="post">
+    <header class="post-header">
+        <h1 class="post-title">{{ current.title }}</h1>
+        {% if current.meta['deck']? %}
+            <p class="post-deck">{{current.meta['deck']}}</p>
+        {% endif %}
+    </header>
+    
+    <div class="post-body">
+        {{ current.body }}
+    </div>
+    <p class="post-date-container">Published on <time datetime="{{ current.date }}" class="post-date">{{ current.date | date: '%B %d, %Y' }}</time></p>
+
+    {% for p in site.pages.work.pages %}
+        {% if current.taxonomy['project'].first == p.meta['project] %}
+            {% assign show_related_projects = true %}
+        {% endif %}
+    {% endfor %}
+
+    {% if show_related_projects %}
+        <section class="post-related-projects">
+            <h2>Related project</h2>
+            <ul>
+                    {% for p in site.pages.work.pages %}
+                        {% if current.taxonomy['project'].first == p.meta['project] %}
+                            <li><a href="{{p.url}}">{{p.title}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+
+    <!--<a class='next nav-icon ss-icon' href='{{ current.next.url }}' style='visibility: {% if current.next %}visible{% else %}hidden{% endif %}'>navigateleft</a>
+    <a class='previous nav-icon ss-icon' href='{{ current.previous.url }}' style='visibility: {% if current.previous %}visible{% else %}hidden{% endif %}'>navigateright</a>-->
+</article>

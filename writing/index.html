@@ -1,0 +1,32 @@
+{% capture content %}
+
+    {% include 'partials/page-title' %}
+
+    <div class="page-content">
+        <div class="page-content-main">
+            {{body | smartypants }}
+        </div>
+
+        {% include 'partials/page-sidebar' %}
+    </div>
+
+    <!--<section class="archive">
+        <ul class="archive-list">
+        {% for p in posts %}
+            {% assign year = p.date | date: '%Y' %}
+            <li class="archive-entry clearfix {% if year != prev_year %}show-year{% endif %} {% if p.meta.featured == 'true' %}is-featured{% endif %}">                
+                <span class="archive-entry-year">{{ year }}</span>
+                <span class="archive-entry-date">{{ p.date | date: '%B %d' }}</span>
+                <span class="archive-entry-title">
+                    <a href="{{ p.url }}" class="archive-entry-link">{{ p.title }}</a>
+                </span>
+            </li>
+
+            {% assign prev_year = year %}
+        {% endfor %}
+        </ul>
+    </section>-->
+
+{% endcapture %}
+
+{% include 'layouts/default' %}

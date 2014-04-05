@@ -1,0 +1,19 @@
+{% capture content %}
+
+{% include 'partials/page-title' %}
+
+<div class="page-content">
+    <div class="page-content-main">
+        <section class="projects">
+            {% for project in current.pages %}
+                {% include 'partials/project-listing' %}
+            {% endfor %}
+        </section>
+    </div>
+
+    {% include 'partials/page-sidebar' %}
+</div>
+
+{% endcapture %}
+
+{% include 'layouts/default' %}

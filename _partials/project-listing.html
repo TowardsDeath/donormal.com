@@ -1,0 +1,9 @@
+<article class="project-listing">
+    <a href="{{ project.url }}" class="project-listing-link">
+        <img class="project-image" src="{{ project.assets.first }}">
+        <h2 class="project-title">{{ project.title }}</h2>
+        {% if project.meta.description %}
+            <p class="project-description">{{ project.meta.description.value }}</p>
+        {% endif %}
+    </a>
+</article>

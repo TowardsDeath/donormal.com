@@ -1,0 +1,15 @@
+<header class="site-header">
+    <div class="site-title">
+        <a href="/" class="site-title-link"><img src="/images/logo.svg" alt="{{site.title}}" class="site-logo"></a>
+    </div>
+
+    <nav class="site-navigation" role="menu">
+        <ul class="site-navigation-list">
+        {% for page in site.pages %}
+            {% unless page.home? %}
+                <li class="site-navigation-item"><a href="{{page.url}}" class="site-navigation-link {% if page.slug == section %}is-current{% endif %}">{{ page.meta['navigation.text'] | fallback: page.title }}</a></li>
+            {% endunless %}
+        {% endfor %}
+        </ul>
+    </nav>
+</header>

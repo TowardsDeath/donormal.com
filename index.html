@@ -1,0 +1,16 @@
+﻿{% capture content %}
+
+{% if site.posts.size > 0 %}
+    <h2>Latest writing</h2>
+    {% for post in site.posts limit: meta['writing.post.limit'] %}
+        <article class="post-listing post-featured">
+            <h3 class="post-title"><a href="{{ post.url }}" class="post-link">{{ post.title }}</a></h3>
+            <p class="post-deck">{{ post.meta.deck }}</p>
+            <p class="post-date-container">Published on <time datetime="{{ current.date }}" class="post-date">{{ current.date | date: '%B %d, %Y' }}</time></p>
+        </article>
+    {% endfor %}
+{% endif %}
+
+{% endcapture %}
+
+{% include 'layouts/default' %}

@@ -1,0 +1,6 @@
+.*
+Gemfile*
+Guardfile
+LICENSE
+README.md
+config.ru

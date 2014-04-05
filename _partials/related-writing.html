@@ -1,0 +1,16 @@
+<!--{% for p in site.posts %}
+    {% if meta['project'] == p.taxonomy['project'].first %}
+        {% assign show_related_writing = true %}
+    {% endif %}
+{% endfor %}
+
+{% if show_related_writing %}
+    <h2>Related writing</h2>
+    <ul>
+        {% for p in site.posts %}
+            {% if meta['project'] == p.taxonomy['project'].first %}
+                <li><a href="{{p.url}}">{{p.title}}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}-->

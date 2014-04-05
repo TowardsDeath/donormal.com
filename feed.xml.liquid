@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+	<title>{{site.title}}</title>
+	<link href="{{site.feed_url}}" rel="self" />
+	<link href="{{site.permalink}}" />
+	<updated>{{site.date | date_to_rfc822}}</updated>
+
+	{% for post in site.pages.writing.posts limit:20 %}
+
+	<entry>
+		<title>{{post.title | xml_escape}}</title>
+		<link href="{{post.permalink}}" />
+		<id>{{post.permalink}}</id>
+		<published>{{post.date | date_to_rfc822}}</published>
+		{% if post.deck? %}
+			<summary>{{post.deck | xml_escape}}</summary>
+		%}
+		<content>{{post.body | xml_escape}}</content>
+		<author>
+            <name>{{post.author.fullname}}</name>
+        </author>
+	</entry>
+ 
+	{% endfor %}	
+ 
+</feed>

@@ -1,0 +1,5 @@
+{% if meta.sidebar %}
+    <aside class="page-content-secondary">
+        {{ meta.sidebar | markdown | smartypants }}
+    </aside>
+{% endif %}

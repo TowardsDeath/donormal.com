@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+        <title>{% if current.home? == false %}{{title}} • {% endif %}{{site.title}}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--<link rel="alternate" type="application/rss+xml" href="{{site.feed_url}}">-->
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        <script src="//use.typekit.net/{{site.meta['typekit.id']}}.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        <script src="/js/modernizr.custom.62890.js"></script>
+    </head>
+    {% assign section = url | remove_first:'/' | split:'/' | first | fallback:'home' %}
+    {% assign p = url | remove_first:'/' | split:'/' | last %}
+    <body class="page-{{section}} {% if page %}page-{{p}}{% endif %}">
+        <div class="page-wrapper" role="main">
+            <div class="site-header-container">
+                {% include 'partials/site-header' %}
+            </div>
+
+            <div class="page-content-container">
+                {{ content }}
+            </div>
+        </div>
+    </body>
+</html>

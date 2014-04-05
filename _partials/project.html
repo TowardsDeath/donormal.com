@@ -1,0 +1,11 @@
+<article class="project">
+    {% include 'partials/project-header' %}
+    
+    <div class="page-content">
+        <div class="page-content-main project-body">
+            {{current.body | smartypants}}
+        </div>
+    </div>
+
+    {% include 'partials/related-writing' %}
+</article>

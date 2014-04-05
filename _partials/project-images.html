@@ -1,0 +1,23 @@
+<article class="project project-images">
+    {% include 'partials/project-header' %}
+    
+    <div class="page-content">
+        {% if current.body != '' %}
+            <div class="project-body">
+                {{ current.body }}
+            </div>
+        {% endif %}
+
+        <div class="project-image-list">
+            {% for image in current.assets %}
+                {% if image.meta.type == 'ingallery' %}
+                    <article class="project-image-container">
+                        <img src="{{ image.url }}" class="project-image">
+                    </article>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include 'partials/related-writing' %}
+</article>
