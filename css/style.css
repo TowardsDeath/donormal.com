@@ -531,7 +531,7 @@ a:focus { opacity: 0.75; }
  * ========================================================================== */
 
 .site-title { margin: 0 0 1rem 0; }
-.site-title-link { display: block; padding-bottom: 0; border-width: 0; }
+.site-title-link { display: inline-block; padding-bottom: 0; border-width: 0; }
 .site-logo { width: 121px; }
 
 /* Navigation */
