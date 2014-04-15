@@ -1,5 +1,14 @@
 {% capture content %}
-    {% include 'partials/article' %}
+
+    {% include 'partials/page-title' %}
+
+    <div class="page-content">
+        <div class="page-content-main">
+            {% include 'partials/post' %}
+        </div>
+
+        {% include 'partials/page-sidebar' %}
+    </div>
 {% endcapture %}
 
 {% include 'layouts/default' %}

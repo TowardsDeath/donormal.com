@@ -1,15 +1,12 @@
 <article class="post">
-    <header class="post-header">
-        <h1 class="post-title">{{ current.title }}</h1>
-        {% if current.meta['deck']? %}
-            <p class="post-deck">{{current.meta['deck']}}</p>
-        {% endif %}
-    </header>
+    {% if current.meta['deck']? %}
+        <p class="post-deck">{{current.meta['deck']}}</p>
+    {% endif %}
     
     <div class="post-body">
         {{ current.body }}
     </div>
-    <p class="post-date-container">Published on <time datetime="{{ current.date }}" class="post-date">{{ current.date | date: '%B %d, %Y' }}</time></p>
+    <p class="post-date-container">Published on <time datetime="{{ current.date }}" class="post-date">{{ current.date | date: '%d %B, %Y' }}</time></p>
 
     {% for p in site.pages.work.pages %}
         {% if current.taxonomy['project'].first == p.meta['project] %}
@@ -21,11 +18,11 @@
         <section class="post-related-projects">
             <h2>Related project</h2>
             <ul>
-                    {% for p in site.pages.work.pages %}
-                        {% if current.taxonomy['project'].first == p.meta['project] %}
-                            <li><a href="{{p.url}}">{{p.title}}</a></li>
-                        {% endif %}
-                    {% endfor %}
+                {% for p in site.pages.work.pages %}
+                    {% if current.taxonomy['project'].first == p.meta['project] %}
+                        <li><a href="{{p.url}}">{{p.title}}</a></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </section>
     {% endif %}
