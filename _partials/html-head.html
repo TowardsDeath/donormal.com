@@ -2,6 +2,6 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="{{ site.meta.twitter }}">
     <meta name="twitter:title" content="{{title}}">
-    <meta name="twitter:description" content="{{excerpt | strip_html }}">
+    <meta name="twitter:description" content="{{excerpt | smartypants | strip_html }}">
     <meta name="twitter:creator" content="{{ site.meta.twitter }}">
 {% endif %}
