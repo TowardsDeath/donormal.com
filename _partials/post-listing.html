@@ -1,5 +1,5 @@
 <article class="post-listing post-featured">
     <h3 class="post-title"><a href="{{ post.url }}" class="post-link">{{ post.title }}</a></h3>
     <p class="post-deck">{{ post.meta.deck }}</p>
-    <p class="post-date-container">Published on <time datetime="{{ current.date }}" class="post-date">{{ current.date | date: '%d %B, %Y' }}</time></p>
+    <p class="post-date-container">Published on <time datetime="{{ post.date }}" class="post-date">{{ post.date | date: '%d %B, %Y' }}</time></p>
 </article>
