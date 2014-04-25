@@ -7,7 +7,6 @@
 	<updated>{{site.date | date_to_rfc822}}</updated>
 
 	{% for post in site.pages.writing.posts limit:20 %}
-
 	<entry>
 		<title>{{post.title | xml_escape}}</title>
 		<link href="{{post.permalink}}" />
@@ -15,13 +14,12 @@
 		<published>{{post.date | date_to_rfc822}}</published>
 		{% if post.deck? %}
 			<summary>{{post.deck | xml_escape}}</summary>
-		%}
+		{% endif %}
 		<content>{{post.body | xml_escape}}</content>
 		<author>
-            <name>{{post.author.fullname}}</name>
-        </author>
+      <name>{{post.author.fullname}}</name>
+    </author>
 	</entry>
- 
-	{% endfor %}	
- 
+  {% endfor %}
+
 </feed>
