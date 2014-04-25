@@ -13,9 +13,9 @@
 		<id>{{post.permalink}}</id>
 		<published>{{post.date | date_to_rfc822}}</published>
 		{% if post.deck? %}
-			<summary>{{post.deck | xml_escape}}</summary>
+			<summary>{{post.deck | smartypants | xml_escape }}</summary>
 		{% endif %}
-		<content>{{post.body | xml_escape}}</content>
+		<content>{{post.body | smartypants | xml_escape}}</content>
 		<author>
       <name>{{post.author.fullname}}</name>
     </author>
