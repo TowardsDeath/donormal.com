@@ -1,7 +1,7 @@
 {% if current.type == 'post' %}
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="{{ site.meta.twitter }}">
-    <meta name="twitter:title" content="{{title}}">
-    <meta name="twitter:description" content="{{excerpt | smartypants | strip_html }}">
+    <meta name="twitter:title" content="{{ title }}">
+    <meta name="twitter:description" content="{{ body | strip_html | smartypants | truncatewords: 50 }}">
     <meta name="twitter:creator" content="{{ site.meta.twitter }}">
 {% endif %}
