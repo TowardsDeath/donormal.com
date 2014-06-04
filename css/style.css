@@ -426,27 +426,8 @@ th {
 
 
 /* ====================================================================================================
-
+    Do Normal styling
 ==================================================================================================== */
-
-
-
-
-/* Grid
- * ========================================================================== */
-
-.grid-container { max-width: 1200px; }
-.grid-narrow { max-width: 600px; }
-.grid-centered { margin: 0 auto; }
-
-.grid-row .grid-row { margin-right: -1.5rem; margin-left: -1.5rem; }
-.grid-unit { padding-right: 1.5rem; padding-left: 1.5rem; }
-
-/* Grid: responsive */
-@media only screen {
-    .grid-unit { float: left; width: 100%; }
-}
-
 
 
 /* Layout
@@ -517,6 +498,9 @@ p { margin: 1.25rem 0; }
 ul { margin-top: 0; margin-left: 0; padding-left: 0; list-style-type: square; }
 
 blockquote { margin-left: 0; padding-left: 1rem; font-family: 'brandon-grotesque', sans-serif; font-size: 1.1rem; border-width: 0 0 0 3px; border-style: solid; border-color: #e8e8e8; font-weight: 400; }
+
+hr { padding-bottom: 1.5rem; border-width: 0; border-color: #fff; background-color: #fff; }
+hr:after { display: block; content: '\2767'; text-align: center; }
 
 
 /* Links
