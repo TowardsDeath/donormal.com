@@ -610,6 +610,12 @@ a:focus { opacity: 0.75; }
 
 
 
+.social-footer { margin: 0 auto; padding: 1rem; background-color: #f3f3f3; }
+/* Social footer: responsive */
+@media screen and (min-width: 720px) {
+    .social-footer { text-align: center; }
+}
+
 /* Page - Home
  * ========================================================================== */
 
