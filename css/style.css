@@ -503,6 +503,22 @@ hr { padding-bottom: 1.5rem; border-width: 0; border-color: #fff; background-col
 hr:after { display: block; content: '\2767'; text-align: center; }
 
 
+
+/* Code blocks
+ * ========================================================================== */
+code, 
+kbd, 
+samp {; font-family: Inconsolata, Monaco, Consolas, "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace; color: #ca9437;  }
+pre { white-space: pre; word-wrap: normal; overflow: auto; padding: 1em; background-color: #5e2a37; border-radius: 3px; white-space: pre-wrap; /* css-3 */ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */ white-space: -pre-wrap; /* Opera 4-6 */ white-space: -o-pre-wrap; /* Opera 7 */ word-wrap: break-word; /* Internet Explorer 5.5+ */ }
+pre, 
+pre code, 
+pre kbd, 
+pre samp {
+    color: #fff;
+}
+
+
+
 /* Links
  * ========================================================================== */
 
