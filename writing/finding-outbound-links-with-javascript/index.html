@@ -1,0 +1,120 @@
+
+
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+        <title>Finding outbound links with JavaScript • Do Normal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="alternate" type="application/rss+xml" href="http://donormal.com/feed.xml">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@_dnrml">
+    <meta name="twitter:title" content="Finding outbound links with JavaScript">
+    <meta name="twitter:description" content="There comes a time in any web developer&rsquo;s career where they have to build something that finds outbound links on a page, for example to register clicks in analytics software, or to decorate them with an icon. It&rsquo;s one of those seemingly easy programming tasks that can get out of...">
+    <meta name="twitter:creator" content="@_dnrml">
+
+        <script src="//use.typekit.net/xef1kea.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        <script src="/js/modernizr.custom.62890.js"></script>
+    </head>
+    
+    
+    <body class="page-writing ">
+        <div class="page-wrapper" role="main">
+            <div class="site-header-container">
+                <header class="site-header">
+    <div class="site-title">
+        <a href="/" class="site-title-link"><img src="/images/logo.svg" alt="Do Normal" class="site-logo"></a>
+    </div>
+
+    <nav class="site-navigation" role="menu">
+        <ul class="site-navigation-list">
+        
+            
+        
+            
+                <li class="site-navigation-item"><a href="/who" class="site-navigation-link ">Who?</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/work" class="site-navigation-link ">Work</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/writing" class="site-navigation-link is-current">Writing</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/store" class="site-navigation-link ">Webstore</a></li>
+            
+        
+        </ul>
+    </nav>
+</header>
+            </div>
+
+            <div class="page-content-container">
+                
+
+    <div class="page-title-container">
+    <h1 class="page-title">Finding outbound links with JavaScript</h1>
+</div>
+
+    <div class="page-content">
+        <div class="page-content-main">
+            <article class="post">
+    
+        <p class="post-deck">You don’t need a regex</p>
+    
+    
+    <div class="post-body">
+        <p>There comes a time in any web developer&rsquo;s career where they have to build something that finds outbound links on a page, for example to register clicks in analytics software, or to decorate them with an icon. It&rsquo;s one of those seemingly easy programming tasks that can get out of hand quickly. </p>
+
+<p>Your first instinct probably is to deconstruct the URL inside the <code>href</code> attribute. Does it start with ‘http’? Does it contain the domain name of the current site? And so on. Before you know it, you&rsquo;re lost inside a myriad of edge cases, <code>split</code> methods, substrings and <code>indexOf</code>s. Or even worse: a regular expression.</p>
+
+<p>There&rsquo;s a little-known &mdash; at least, I didn&rsquo;t know about this for way too long &mdash; and elegant solution to this problem. A hyperlink has a host property which can be compared to the current page&rsquo;s host. The (jQuery based) code speaks for itself.</p>
+
+<pre><code>var pageHost = window.location.host;
+
+$(&#39;a&#39;).on(&#39;click&#39;, function(e) {
+    var isOutBound = $(this).prop(&#39;host&#39;) !== pageHost;
+
+    if (isOutBound) {
+        // Do something with outbound links
+    }
+});
+</code></pre>
+
+<p>It&rsquo;s not going to win any programming awards, but it&rsquo;s a nice little trick that condenses a lot of potentially buggy string manipulation into a single line of code.</p>
+
+    </div>
+    <p class="post-date-container">Published on <time datetime="2015-04-30 22:15:00 +0200" class="post-date">30 April, 2015</time></p>
+
+    
+        
+    
+        
+    
+
+    
+
+    <!--<a class='next nav-icon ss-icon' href='' style='visibility: hidden'>navigateleft</a>
+    <a class='previous nav-icon ss-icon' href='/writing/refactoring-to-scalable-css' style='visibility: visible'>navigateright</a>-->
+</article>
+        </div>
+
+        
+    </div>
+
+    <div class="social-footer">
+    <p>Follow <a href="https://twitter.com/@_dnrml" class="social-footer-link">@_dnrml</a> on Twitter.</p>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>

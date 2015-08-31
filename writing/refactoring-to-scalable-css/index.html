@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+        <title>Refactoring to scalable CSS • Do Normal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="alternate" type="application/rss+xml" href="http://donormal.com/feed.xml">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@_dnrml">
+    <meta name="twitter:title" content="Refactoring to scalable CSS">
+    <meta name="twitter:description" content="A lot of front-end work is done ad-hoc: the goal is to make a design work in a few browsers in as little time as possible. The CSS is built like it&rsquo;s something to never look back to. A shortcut here, a hack there, &ldquo;I&rsquo;ll fix it later.&rdquo; The problem...">
+    <meta name="twitter:creator" content="@_dnrml">
+
+        <script src="//use.typekit.net/xef1kea.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        <script src="/js/modernizr.custom.62890.js"></script>
+    </head>
+    
+    
+    <body class="page-writing ">
+        <div class="page-wrapper" role="main">
+            <div class="site-header-container">
+                <header class="site-header">
+    <div class="site-title">
+        <a href="/" class="site-title-link"><img src="/images/logo.svg" alt="Do Normal" class="site-logo"></a>
+    </div>
+
+    <nav class="site-navigation" role="menu">
+        <ul class="site-navigation-list">
+        
+            
+        
+            
+                <li class="site-navigation-item"><a href="/who" class="site-navigation-link ">Who?</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/work" class="site-navigation-link ">Work</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/writing" class="site-navigation-link is-current">Writing</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/store" class="site-navigation-link ">Webstore</a></li>
+            
+        
+        </ul>
+    </nav>
+</header>
+            </div>
+
+            <div class="page-content-container">
+                
+
+    <div class="page-title-container">
+    <h1 class="page-title">Refactoring to scalable CSS</h1>
+</div>
+
+    <div class="page-content">
+        <div class="page-content-main">
+            <article class="post">
+    
+    
+    <div class="post-body">
+        <p>A lot of front-end work is done ad-hoc: the goal is to make a design work in a few browsers in as little time as possible. The CSS is built like it&rsquo;s something to never look back to. A shortcut here, a hack there, &ldquo;I&rsquo;ll fix it later.&rdquo; The problem is: you won&rsquo;t. And you will feel sorry for yourself when the inevitable time comes when you have to work on that project again and have to navigate through a seemingly endless maze of nested selectors and unstructured code.</p>
+
+<p>This special kind of hell can be avoided. CSS can be maintainable. CSS can be scalable. And you don&rsquo;t have to wait for a fresh new project to create scalable CSS. Let&rsquo;s take a look at how to refactor existing code to a situation that&rsquo;s more readable and maintainable.</p>
+
+<h2>Refactoring</h2>
+
+<p>How do you know if you need to refactor your CSS? There are a few indicators:</p>
+
+<ol>
+<li>When every time you open the project, you contemplate changing your career to become a bus driver.</li>
+<li><strong>Nested selectors</strong>. They increase complexity and make your code harder to read or change. When you have selectors nested more than 2 or at most 3 levels deep, start refactoring immediately.</li>
+<li>When there&rsquo;s no naming scheme for classes, it&rsquo;s probably time to pick one you like (BEM, SMACSS, OOCSS et cetera).</li>
+<li>Look for inconsistencies in the ways values are defined.</li>
+<li>Look for properties that are defined multiple times across components. They&rsquo;re best defined as shared object or utility classes that you apply to the element everytime you need them.</li>
+<li>Anything else that might help someone who opens your project help understand it quicker and make changes in the right way.</li>
+</ol>
+
+<p>As always when you refactor code: make a small change and check if you haven&rsquo;t broken anything after each change. (It would be great if you have automated tests to check this for you.)</p>
+
+<h2>Let&rsquo;s start</h2>
+
+<p>I&rsquo;ve taken a small sample from a project I worked on recently. (The code is altered slightly for the purpose of this article.) The CSS was not built with maintainability in mind. As the code changed daily and developers could not fully understand the impact of changes they were making, quite a few bugs were introduced. But, it&rsquo;s never too late to start refactoring.</p>
+
+<p>Let&rsquo;s start with the HTML. A simple component that summarizes information from another page:</p>
+
+<pre><code>&lt;div class=&quot;ci&quot;&gt;
+    &lt;a href=&quot;/episodes/the-label-maker&quot;&gt;
+        &lt;h2&gt;Episode: The Label Maker&lt;/h2&gt;
+        &lt;div class=&quot;ci-content&quot;&gt;
+            &lt;div class=&quot;visualcontent&quot;&gt;
+                &lt;img src=&quot;/images/some-image.jpg&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;panel&quot;&gt;
+                &lt;p&gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &quot;the Drake&#39;s&quot; wedding.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;cta-label&quot;&gt;
+                &lt;p&gt;Watch episode&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>The corresponding stylesheet:</p>
+
+<pre><code>div.ci {
+    position: relative;
+    margin-bottom: 70px;
+
+    h2 {
+        color: #c40037;
+    }
+
+    a {
+        display: block;
+        text-decoration: none;
+
+        &amp;:hover {
+            transition: opacity 0.2s ease;
+
+            img {
+                opacity: 0.7;
+            }
+        }
+
+        img {
+            transform: translateZ(0);
+            transition: opacity 0.2s ease;
+            opacity: 1;
+        }
+    }
+
+    .ci-content {
+        .visualcontent {
+            height: 200px;
+            overflow: hidden;
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .panel {
+            background: url(&#39;../images/backgrounds/arrow-bg.png&#39;) center right no-repeat;
+            padding: 30px 60px 30px 30px;
+        }
+
+        .cta-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 170px;
+            background: #c40037;
+            z-index: 20;
+
+            p {
+                color: #FFFFFF;
+                padding: 15px 30px 15px 20px;
+                text-transform: uppercase;
+                font: {
+                    weight: 700;
+                }
+                line-height: 17px;
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>The goal is to increase maintainability and ease of use for developers. With that in mind, a few problems can be spotted.</p>
+
+<ol>
+<li>The class names are inconsistent: some are hyphenated, others are not.</li>
+<li>Abbreviations in class names.</li>
+<li>The CSS is too tightly coupled to the HTML by element selectors.</li>
+<li>Re-usability is lowered by the deep nesting of selectors.</li>
+<li>The CSS contains inconsistent values and uses properties with too big a scope.</li>
+<li>Lack of HTML5 elements.</li>
+</ol>
+
+<p>Let&rsquo;s further explain and solve these problems.</p>
+
+<h2>Inconsistent class names (1)</h2>
+
+<p>Class names need to be consistent, predictable and readable. Inconsistencies slow down development when reading and when adding code. Consistent naming, however, gives developers a solid starting point when they need to add code. My preference is to place a hyphen between nouns. Whatever yours is, just make sure to apply it every time.</p>
+
+<p>In this case, <code>visualcontent</code> should be hyphenated to be consistent with other classes.</p>
+
+<pre><code>&lt;div class=&quot;visual-content&quot;&gt;
+    &lt;img src=&quot;/images/some-image.jpg&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+
+<pre><code>.visual-content {
+    height: 200px;
+    overflow: hidden;
+
+    …
+}
+</code></pre>
+
+<h2>Abbreviations in class names (2)</h2>
+
+<p>Abbreviations shorten code and shorter code is better, right? Not if you&rsquo;re new to a project. If you have no idea what these abbreviations mean, you cannot properly understand the code and confidently make changes. This problem is avoided by fully writing out class names.</p>
+
+<p>In this case, <code>ci</code> and <code>cta</code> are abbreviations of <code>content-item</code> and <code>call-to-action</code>. Let&rsquo;s make the changes.</p>
+
+<pre><code>&lt;div class=&quot;content-item&quot;&gt;
+    &lt;a href=&quot;/episodes/the-label-maker&quot;&gt;
+        &lt;h2&gt;Episode: The Label Maker&lt;/h2&gt;
+        &lt;div class=&quot;content-item-content&quot;&gt;
+            &lt;div class=&quot;visual-content&quot;&gt;
+                &lt;img src=&quot;/images/some-image.jpg&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;panel&quot;&gt;
+                &lt;p&gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &quot;the Drake&#39;s&quot; wedding.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;call-to-action-label&quot;&gt;
+                &lt;p&gt;Watch episode&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p><code>content-item-content</code> is not a great name, but that will be taken care of in the next step.</p>
+
+<h2>Tight coupling (3) &amp; low re-usability (4)</h2>
+
+<p>Using element selectors (<code>div { }</code>) means you can never change the HTML without changing the CSS and vice versa. The CSS has hard dependencies on what type of HTML element is used. If a developer is unaware of these dependencies and makes changes to the HTML, the design will break. In this case, the <code>p</code> cannot be changed to a <code>div</code> without unforeseen consequences. Especially in projects where code changes rapidly, this can easily lead to time-consuming bugs.</p>
+
+<p>Similarly, the nesting of selectors adds unnecessary dependencies. It means things are styled based on where they are in the hierarchy, not on what they are. They cannot be moved around without breaking something. Returning to our example, what if <code>call-to-action</code> needs to be used in another component? Right now, it&rsquo;s tied to the <code>.content-item</code> component and cannot be used elsewhere.</p>
+
+<p>The scalable solution to both these problems is to use classes for each element and adopt a naming scheme. I highly recommend a <a href="http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/">BEM-like naming</a> for components and simple hyphenation for other utility classes, but feel free to pick your own favourite scheme.</p>
+
+<p>First, let&rsquo;s add a class with a BEM name to each element that needs to be styled. In the process, I&rsquo;ll rename <code>content-item-content</code> to <code>content-item__body</code> to better reflect what it does. I&rsquo;ll drop the <code>-label</code>-part of <code>call-to-action-label</code> as well.</p>
+
+<pre><code>&lt;div class=&quot;content-item&quot;&gt;
+    &lt;a href=&quot;/episodes/the-label-maker&quot; class=&quot;content-item__link&quot;&gt;
+        &lt;h2 class=&quot;content-item__title&quot;&gt;Episode: The Label Maker&lt;/h2&gt;
+        &lt;div class=&quot;content-item__body&quot;&gt;
+            &lt;div class=&quot;content-item__visual&quot;&gt;
+                &lt;img src=&quot;/images/some-image.jpg&quot; class=&quot;content-item__image&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;content-item__text&quot;&gt;
+                &lt;p&gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &quot;the Drake&#39;s&quot; wedding.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;content-item__call-to-action&quot;&gt;
+                &lt;p&gt;Watch episode&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Next up, replace the element selectors with the new BEM-classes and remove their nesting.</p>
+
+<pre><code>.content-item {
+    position: relative;
+    margin-bottom: 70px;
+
+    a {
+        display: block;
+        text-decoration: none;
+
+        &amp;:hover {
+            transition: opacity 0.2s ease;
+
+            img {
+                opacity: 0.7;
+            }
+        }
+
+        img {
+            transform: translateZ(0);
+            transition: opacity 0.2s ease;
+            opacity: 1;
+        }
+    }
+}
+
+.content-item__title {
+    color: #c40037;
+}
+
+.content-item__visual {
+    height: 200px;
+    overflow: hidden;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
+
+.content-item__text {
+    background: url(&#39;../images/backgrounds/arrow-bg.png&#39;) center right no-repeat;
+    padding: 30px 60px 30px 30px;
+}
+
+.content-item__call-to-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 170px;
+    background: #c40037;
+    z-index: 20;
+
+    p {
+        color: #FFFFFF;
+        padding: 15px 30px 15px 20px;
+        text-transform: uppercase;
+        font: {
+            weight: 700;
+        }
+        line-height: 17px;
+    }
+}
+</code></pre>
+
+<p>There are fewer dependencies already. Notice how we started with several elements nested inside a <code>.ci-content { }</code> selector. After refactoring, they aren&rsquo;t nested anymore. We&rsquo;ve gained flexibility: they can be moved around in the HTML without the layout breaking.</p>
+
+<p>There are still some element selectors, so this step is not yet finished. Let&rsquo;s introduce some abstractions. Right now, the CSS for <code>content-item__call-to-action</code> consists of two parts: its positioning inside <code>content-item</code> and how it&rsquo;s supposed to look (colours et cetera). It would be good if we created a separate class for the latter so it can be re-used elsewhere.</p>
+
+<pre><code>.content-item__call-to-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 170px;
+    z-index: 20;
+}
+
+.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+        weight: 700;
+    }
+    line-height: 17px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    background: #c40037;
+}
+</code></pre>
+
+<p>Both classes need to be applied to the corresponding element. (When working with BEM syntax, it can be a little hard to distinguish class names. Separate the class names with two spaces to improve  readability.)</p>
+
+<pre><code>&lt;div class=&quot;content-item__call-to-action  call-to-action&quot;&gt;
+    &lt;p&gt;Watch episode&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Let&rsquo;s get rid of the <code>img</code> selector next. Its task is to make the image in <code>content-item</code> stretch the full width of the container. That seems like something that can be used in other places as well. A perfect candidate for a utility class. (Try to keep the number of properties inside utility classes as small as possible.)</p>
+
+<pre><code>.content-item__visual {
+    height: 200px;
+    overflow: hidden;  
+}
+
+.full-width {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+&lt;div class=&quot;content-item__visual&quot;&gt;
+    &lt;img src=&quot;/images/some-image.jpg&quot; class=&quot;content-item__image  full-width&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>The only element selector left is the <code>a</code> selector. It handles two things:</p>
+
+<ul>
+<li>Making sure the entire <code>content-item</code> is clickable and has no underline.</li>
+<li>Creating a fancy hover effect.</li>
+</ul>
+
+<p>It&rsquo;s quite possible removing link underlines is something that will need to be done in other places, so let&rsquo;s make it a utility class. I&rsquo;ve named it <code>block-link</code> to make it a bit more generic.</p>
+
+<pre><code>.block-link {
+    display: block;
+    text-decoration: none;
+}
+</code></pre>
+
+<p>The hover effect is placed on the <code>a</code> element. That&rsquo;s an ancient leftover from a time where <code>:hover</code> only worked on actual hyperlinks in Internet Explorer. We&rsquo;re way past that, so let&rsquo;s move the <code>:hover</code> to  <code>content-item</code>. Also notice how the transition is defined on both the element and the hover state. That&rsquo;s unnecessary: when working with transitions, the transition needs to be defined only on the element, not the special state. On hover, just change the property that needs to be &lsquo;transitioned&rsquo;.</p>
+
+<pre><code>.content-item__image {
+    transform: translateZ(0);
+    transition: opacity 0.2s ease;
+
+    .content-item:hover &amp; {
+        opacity: 0.7;
+    }
+}
+</code></pre>
+
+<p>After all this refactoring, the CSS is a lot more readable. Instead of working your way through multiple nested selectors, it&rsquo;s now easy to see what each class does.</p>
+
+<pre><code>.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+      weight: 700;
+    }
+    line-height: 17px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    background: #c40037;
+}
+
+.full-width {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.block-link {
+    display: block;
+    text-decoration: none;
+}
+
+.content-item {
+    position: relative;
+    margin-bottom: 70px;
+}
+
+.content-item__title {
+    color: #c40037;
+}
+
+.content-item__visual {
+    height: 200px;
+    overflow: hidden;
+}
+
+.content-item__image {
+    transform: translateZ(0);
+    transition: opacity 0.2s ease;
+
+    .content-item:hover &amp; {
+        opacity: 0.7;
+    }
+}
+
+.content-item__text {
+    background: url(&#39;../images/backgrounds/arrow-bg.png&#39;) center right no-repeat;
+    padding: 30px 60px 30px 30px;
+}
+
+.content-item__call-to-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 170px;
+    z-index: 20;
+}
+</code></pre>
+
+<p>The HTML:</p>
+
+<pre><code>&lt;div class=&quot;content-item&quot;&gt;
+    &lt;a href=&quot;/episodes/the-label-maker&quot; class=&quot;content-item__link  block-link&quot;&gt;
+        &lt;h2 class=&quot;content-item__title&quot;&gt;Episode: The Label Maker&lt;/h2&gt;
+        &lt;div class=&quot;content-item__body&quot;&gt;
+            &lt;div class=&quot;content-item__visual&quot;&gt;
+                  &lt;img src=&quot;/images/some-image.jpg&quot; class=&quot;content-item__image  full-width&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;content-item__text&quot;&gt;
+                &lt;p&gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &quot;the Drake&#39;s&quot; wedding.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;content-item__call-to-action  call-to-action&quot;&gt;
+                &lt;p&gt;Watch episode&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h2>Inconsistent values and properties with too big a scope (5)</h2>
+
+<p>When using colours in CSS, it&rsquo;s easy to introduce inconsistencies in their notations. My preference is to always use lowercase and use the shorthand three digit notation where possible. In our example, two types of casing are used. One color definition needs to change:</p>
+
+<pre><code>.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+        weight: 700;
+    }
+    line-height: 17px;
+    color: #fff; // Was: #FFFFFF
+    text-transform: uppercase;
+    background: #c40037;
+}
+</code></pre>
+
+<p>There&rsquo;s also a problem with the way the backgrounds are defined. The shorthand syntax (<code>background: ...</code>) seems convenient because it&rsquo;s shorter. However, if you define a background image on an element, and at a later point in the stylesheet you define a background colour with the shorthand syntax, the background image is removed.</p>
+
+<pre><code>.johnson-rod {
+    background-image: url(../images/johnson02.jpg);
+}
+
+// ... 
+
+.johnson-rod {
+    background: #c43593;
+    // Oops, the previously defined background image is now removed from the element.
+}
+</code></pre>
+
+<p>So, be careful with shorthand syntax. It can lead to unintended behaviour. My guideline: only use it if you&rsquo;re absolutely sure you want to change all properties that are affected by the shorthand. If you want to change only one property, just use that. </p>
+
+<p>After refactoring this:</p>
+
+<pre><code>.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+        weight: 700;
+    }
+    line-height: 17px;
+    color: #fff;
+    text-transform: uppercase;
+    background-color: #c40037;
+}
+
+.content-item__text {
+    background-image: url(&#39;../images/backgrounds/arrow-bg.png&#39;);
+    background-position: center right;
+    background-repeat: no-repeat;
+    padding: 30px 60px 30px 30px;
+}
+</code></pre>
+
+<h2>Lack of HTML5 elements (6)</h2>
+
+<p>HTML5 has been around for a while now. It can&rsquo;t hurt to actually use it to improve the semantics of the code.</p>
+
+<p>The entire block can be placed anywhere on the page without losing its meaning, so it&rsquo;s fit to be an <code>article</code> element. </p>
+
+<pre><code>&lt;article class=&quot;content-item&quot;&gt;
+    &lt;a href=&quot;/episodes/the-label-maker&quot; class=&quot;content-item__link  block-link&quot;&gt;
+        &lt;h2 class=&quot;content-item__title&quot;&gt;Episode: The Label Maker&lt;/h2&gt;
+        &lt;div class=&quot;content-item__body&quot;&gt;
+            &lt;div class=&quot;content-item__visual&quot;&gt;
+                  &lt;img src=&quot;/images/some-image.jpg&quot; class=&quot;content-item__image  full-width&quot;&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;content-item__text&quot;&gt;
+                &lt;p&gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &quot;the Drake&#39;s&quot; wedding.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;content-item__call-to-action  call-to-action&quot;&gt;
+                &lt;p&gt;Watch episode&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/a&gt;
+&lt;/article&gt;
+</code></pre>
+
+<p>Images and other media can be marked up more sematically in HTML5, so let&rsquo;s make the visual a <code>figure</code> element. Also, let&rsquo;s add <code>title</code> and <code>alt</code> attributes for accessibility.</p>
+
+<pre><code>&lt;figure class=&quot;content-item__visual&quot;&gt;
+    &lt;img src=&quot;/images/some-image.jpg&quot; class=&quot;content-item__image  full-width&quot; alt=&quot;Episode image: The Label Maker&quot; title=&quot;The Label Maker&quot;&gt;
+&lt;/figure&gt;
+</code></pre>
+
+<h2>The end result (for now)</h2>
+
+<p>HTML:</p>
+
+<pre><code>&lt;article class=&quot;content-item&quot;&gt;
+    &lt;a href=&quot;/episodes/the-label-maker&quot; class=&quot;content-item__link  block-link&quot;&gt;
+        &lt;h2 class=&quot;content-item__title&quot;&gt;Episode: The Label Maker&lt;/h2&gt;
+        &lt;div class=&quot;content-item__body&quot;&gt;
+            &lt;figure class=&quot;content-item__visual&quot;&gt;
+                &lt;img src=&quot;/images/some-image.jpg&quot; class=&quot;content-item__image  full-width&quot; alt=&quot;Episode image: The Label Maker&quot; title=&quot;The Label Maker&quot;&gt;
+            &lt;/figure&gt;
+            &lt;div class=&quot;content-item__text&quot;&gt;
+                &lt;p&gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &quot;the Drake&#39;s&quot; wedding.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;content-item__call-to-action  call-to-action&quot;&gt;
+                &lt;p&gt;Watch episode&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/a&gt;
+&lt;/article&gt;
+</code></pre>
+
+<p>CSS:</p>
+
+<pre><code>.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+        weight: 700;
+    }
+    line-height: 17px;
+    color: #fff;
+    text-transform: uppercase;
+    background-color: #c40037;
+}
+
+.full-width {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.block-link {
+    display: block;
+    text-decoration: none;
+}
+
+.content-item {
+    position: relative;
+    margin-bottom: 70px;
+}
+
+.content-item__title {
+    color: #c40037;
+}
+
+.content-item__visual {
+    height: 200px;
+    overflow: hidden;
+}
+
+.content-item__image {
+    transform: translateZ(0);
+    transition: opacity 0.2s ease;
+
+    .content-item:hover &amp; {
+        opacity: 0.7;
+    }
+}
+
+.content-item__text {
+    padding: 30px 60px 30px 30px;
+    background-image: url(&#39;../images/backgrounds/arrow-bg.png&#39;);
+    background-position: center right;
+    background-repeat: no-repeat;        
+}
+
+.content-item__call-to-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 170px;
+    z-index: 20;
+}
+</code></pre>
+
+<p>Of course, there are a couple of things that can be improved.</p>
+
+<ul>
+<li>The reasoning behind the decisions should be documented with comments.</li>
+<li>Add namespaces to classes to indicate their scope and intent.</li>
+<li>Introduce SASS/LESS variables.</li>
+<li>The pixel units can be changed to relative units to improve proportional scaling, which is helpful when designing responsive pages.</li>
+<li>Improve browser support by applying vendor prefixes to <code>transform</code> and <code>transition</code>.</li>
+</ul>
+
+<h2>To sum up</h2>
+
+<p>The code is now more readable, extendable and maintainable. (I&rsquo;m sure a few other <em>able</em>-adjectives can be applied, but three is enough.)</p>
+
+<p>If you have any questions about how to create more scalable CSS: feel free to contact me; I might be available to help you get started.</p>
+
+    </div>
+    <p class="post-date-container">Published on <time datetime="2015-03-23 20:36:00 +0100" class="post-date">23 March, 2015</time></p>
+
+    
+        
+    
+        
+    
+
+    
+
+    <!--<a class='next nav-icon ss-icon' href='/writing/finding-outbound-links-with-javascript' style='visibility: visible'>navigateleft</a>
+    <a class='previous nav-icon ss-icon' href='/writing/naming-sass-colour-variables' style='visibility: visible'>navigateright</a>-->
+</article>
+        </div>
+
+        
+    </div>
+
+    <div class="social-footer">
+    <p>Follow <a href="https://twitter.com/@_dnrml" class="social-footer-link">@_dnrml</a> on Twitter.</p>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>

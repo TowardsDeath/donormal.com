@@ -1,0 +1,164 @@
+
+
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+        <title>Naming SASS colour variables • Do Normal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="alternate" type="application/rss+xml" href="http://donormal.com/feed.xml">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@_dnrml">
+    <meta name="twitter:title" content="Naming SASS colour variables">
+    <meta name="twitter:description" content="Naming is hard. Naming in software development is hard. Naming your SASS colour variables is the hardest of all. Not as hard as making it through one episode of Family Guy, but still. An example A simple design could start out with these colours. $blue: #0d6bac; $light-blue: #60a5d6; The design...">
+    <meta name="twitter:creator" content="@_dnrml">
+
+        <script src="//use.typekit.net/xef1kea.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        <script src="/js/modernizr.custom.62890.js"></script>
+    </head>
+    
+    
+    <body class="page-writing ">
+        <div class="page-wrapper" role="main">
+            <div class="site-header-container">
+                <header class="site-header">
+    <div class="site-title">
+        <a href="/" class="site-title-link"><img src="/images/logo.svg" alt="Do Normal" class="site-logo"></a>
+    </div>
+
+    <nav class="site-navigation" role="menu">
+        <ul class="site-navigation-list">
+        
+            
+        
+            
+                <li class="site-navigation-item"><a href="/who" class="site-navigation-link ">Who?</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/work" class="site-navigation-link ">Work</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/writing" class="site-navigation-link is-current">Writing</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/store" class="site-navigation-link ">Webstore</a></li>
+            
+        
+        </ul>
+    </nav>
+</header>
+            </div>
+
+            <div class="page-content-container">
+                
+
+    <div class="page-title-container">
+    <h1 class="page-title">Naming SASS colour variables</h1>
+</div>
+
+    <div class="page-content">
+        <div class="page-content-main">
+            <article class="post">
+    
+        <p class="post-deck">A simple solution to a common problem.</p>
+    
+    
+    <div class="post-body">
+        <p>Naming is hard.<br>
+Naming in software development is hard.<br>
+Naming your SASS colour variables is the hardest of all. Not as hard as making it through one episode of Family Guy, but still.</p>
+
+<h2>An example</h2>
+
+<p>A simple design could start out with these colours.</p>
+
+<pre><code>$blue: #0d6bac;
+$light-blue: #60a5d6;
+</code></pre>
+
+<p>The design is tweaked by adding another colour.</p>
+
+<pre><code>$blue: #0d6bac;
+$light-blue: #60a5d6;
+$lighter-blue: #b0d2e9;
+</code></pre>
+
+<p>Another design change.</p>
+
+<pre><code>$blue: #0d6bac;
+$light-blue: #60a5d6;
+$lighter-blue: #b0d2e9;
+$even-lighter-blue: #daecf8;
+</code></pre>
+
+<p>Already it&rsquo;s a mess, even with as few as four colours. <code>lighter-blue</code>? Lighter than what? This naming scheme isn&rsquo;t very maintainable, yet it&rsquo;s how a lot of projects describe their SASS colours.</p>
+
+<h2>The solution</h2>
+
+<p><strong>The problem comes from the fact that the names are chosen arbitrarily.</strong> There&rsquo;s no reference point to base your next variable on.</p>
+
+<p>A colour name generator fixes this: it takes a hex or RGB value and returns a colour name that you can use in your variable name. A generator I frequently use is <a href="http://chir.ag/projects/name-that-color/">Name That Color</a>. And if you include the hue as well, your variables are <strong>usable, predictable and maintainable</strong>.</p>
+
+<p>Let&rsquo;s apply the names from <em>Name That Color</em> to our example.</p>
+
+<pre><code>// Naming scheme: ${hue}-{name}
+// http://chir.ag/projects/name-that-color/
+$blue-denim: #0d6bac;
+$blue-danube: #60a5d6;
+$blue-spindle: #b0d2e9;
+$blue-link-water: #daecf8;
+</code></pre>
+
+<p>A vast improvement: it&rsquo;s easy to identify each colour and most of all, it&rsquo;s a lot easier to add new colours. (You should place all colours in a separate <code>_colors.scss</code> file.)</p>
+
+<h2>Next</h2>
+
+<p>These colours are not semantic enough to be used directly, so the next step would be to assign these variables to other variables used in your page elements.</p>
+
+<p>For example, in <code>_menu.scss</code>:</p>
+
+<pre><code>// Apply colors locally
+$menu-border-color: $blue-danube;
+
+// Menu block
+.menu {
+    …
+    border-color: $menu-border-color;
+}
+</code></pre>
+
+    </div>
+    <p class="post-date-container">Published on <time datetime="2015-01-26 23:12:00 +0100" class="post-date">26 January, 2015</time></p>
+
+    
+        
+    
+        
+    
+
+    
+
+    <!--<a class='next nav-icon ss-icon' href='/writing/refactoring-to-scalable-css' style='visibility: visible'>navigateleft</a>
+    <a class='previous nav-icon ss-icon' href='/writing/revisiting-visited-links' style='visibility: visible'>navigateright</a>-->
+</article>
+        </div>
+
+        
+    </div>
+
+    <div class="social-footer">
+    <p>Follow <a href="https://twitter.com/@_dnrml" class="social-footer-link">@_dnrml</a> on Twitter.</p>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>

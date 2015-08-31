@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	
+		<url>
+			<loc>http://donormal.com/</loc>
+			<lastmod>2014-09-29 19:04:33 +0000</lastmod>
+			<priority>1.0</priority>
+		</url>
+		
+	
+		<url>
+			<loc>http://donormal.com/who</loc>
+			<lastmod>2014-04-15 13:48:44 +0000</lastmod>
+			<priority>1.0</priority>
+		</url>
+		
+	
+		<url>
+			<loc>http://donormal.com/work</loc>
+			<lastmod>2015-06-01 07:36:54 +0000</lastmod>
+			<priority>1.0</priority>
+		</url>
+		
+	
+		<url>
+			<loc>http://donormal.com/writing</loc>
+			<lastmod>2014-09-03 07:55:12 +0000</lastmod>
+			<priority>1.0</priority>
+		</url>
+		
+			
+				<url>
+					<loc>http://donormal.com/writing/finding-outbound-links-with-javascript</loc>
+					<lastmod>2015-04-30 20:18:44 +0000</lastmod>
+					<priority>0.5</priority>
+				</url>
+			
+				<url>
+					<loc>http://donormal.com/writing/refactoring-to-scalable-css</loc>
+					<lastmod>2015-04-03 07:17:17 +0000</lastmod>
+					<priority>0.5</priority>
+				</url>
+			
+				<url>
+					<loc>http://donormal.com/writing/naming-sass-colour-variables</loc>
+					<lastmod>2015-03-04 17:16:19 +0000</lastmod>
+					<priority>0.5</priority>
+				</url>
+			
+				<url>
+					<loc>http://donormal.com/writing/revisiting-visited-links</loc>
+					<lastmod>2014-06-05 14:46:16 +0000</lastmod>
+					<priority>0.5</priority>
+				</url>
+			
+				<url>
+					<loc>http://donormal.com/writing/finally</loc>
+					<lastmod>2014-06-19 13:05:53 +0000</lastmod>
+					<priority>0.5</priority>
+				</url>
+			
+		
+	
+		<url>
+			<loc>http://donormal.com/store</loc>
+			<lastmod>2014-04-04 14:55:11 +0000</lastmod>
+			<priority>1.0</priority>
+		</url>
+		
+	
+</urlset>

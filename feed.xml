@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+	<title>Do Normal</title>
+	<link href="http://donormal.com/feed.xml" rel="self" />
+	<link href="http://donormal.com" />
+	<updated>Mon, 31 Aug 2015 21:18:19 +0200</updated>
+
+	
+	<entry>
+		<title>Finding outbound links with JavaScript</title>
+		<link href="http://donormal.com/writing/finding-outbound-links-with-javascript" />
+		<id>http://donormal.com/writing/finding-outbound-links-with-javascript</id>
+		<published>Thu, 30 Apr 2015 22:15:00 +0200</published>
+		
+		<content>&lt;p&gt;There comes a time in any web developer&amp;rsquo;s career where they have to build something that finds outbound links on a page, for example to register clicks in analytics software, or to decorate them with an icon. It&amp;rsquo;s one of those seemingly easy programming tasks that can get out of hand quickly. &lt;/p&gt;
+
+&lt;p&gt;Your first instinct probably is to deconstruct the URL inside the &lt;code&gt;href&lt;/code&gt; attribute. Does it start with ‘http’? Does it contain the domain name of the current site? And so on. Before you know it, you&amp;rsquo;re lost inside a myriad of edge cases, &lt;code&gt;split&lt;/code&gt; methods, substrings and &lt;code&gt;indexOf&lt;/code&gt;s. Or even worse: a regular expression.&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s a little-known &amp;mdash; at least, I didn&amp;rsquo;t know about this for way too long &amp;mdash; and elegant solution to this problem. A hyperlink has a host property which can be compared to the current page&amp;rsquo;s host. The (jQuery based) code speaks for itself.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var pageHost = window.location.host;
+
+$(&amp;#39;a&amp;#39;).on(&amp;#39;click&amp;#39;, function(e) {
+    var isOutBound = $(this).prop(&amp;#39;host&amp;#39;) !== pageHost;
+
+    if (isOutBound) {
+        // Do something with outbound links
+    }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It&amp;rsquo;s not going to win any programming awards, but it&amp;rsquo;s a nice little trick that condenses a lot of potentially buggy string manipulation into a single line of code.&lt;/p&gt;
+</content>
+		<author>
+      <name>Robert van Kempen</name>
+    </author>
+	</entry>
+  
+	<entry>
+		<title>Refactoring to scalable CSS</title>
+		<link href="http://donormal.com/writing/refactoring-to-scalable-css" />
+		<id>http://donormal.com/writing/refactoring-to-scalable-css</id>
+		<published>Mon, 23 Mar 2015 20:36:00 +0100</published>
+		
+		<content>&lt;p&gt;A lot of front-end work is done ad-hoc: the goal is to make a design work in a few browsers in as little time as possible. The CSS is built like it&amp;rsquo;s something to never look back to. A shortcut here, a hack there, &amp;ldquo;I&amp;rsquo;ll fix it later.&amp;rdquo; The problem is: you won&amp;rsquo;t. And you will feel sorry for yourself when the inevitable time comes when you have to work on that project again and have to navigate through a seemingly endless maze of nested selectors and unstructured code.&lt;/p&gt;
+
+&lt;p&gt;This special kind of hell can be avoided. CSS can be maintainable. CSS can be scalable. And you don&amp;rsquo;t have to wait for a fresh new project to create scalable CSS. Let&amp;rsquo;s take a look at how to refactor existing code to a situation that&amp;rsquo;s more readable and maintainable.&lt;/p&gt;
+
+&lt;h2&gt;Refactoring&lt;/h2&gt;
+
+&lt;p&gt;How do you know if you need to refactor your CSS? There are a few indicators:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;When every time you open the project, you contemplate changing your career to become a bus driver.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Nested selectors&lt;/strong&gt;. They increase complexity and make your code harder to read or change. When you have selectors nested more than 2 or at most 3 levels deep, start refactoring immediately.&lt;/li&gt;
+&lt;li&gt;When there&amp;rsquo;s no naming scheme for classes, it&amp;rsquo;s probably time to pick one you like (BEM, SMACSS, OOCSS et cetera).&lt;/li&gt;
+&lt;li&gt;Look for inconsistencies in the ways values are defined.&lt;/li&gt;
+&lt;li&gt;Look for properties that are defined multiple times across components. They&amp;rsquo;re best defined as shared object or utility classes that you apply to the element everytime you need them.&lt;/li&gt;
+&lt;li&gt;Anything else that might help someone who opens your project help understand it quicker and make changes in the right way.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;As always when you refactor code: make a small change and check if you haven&amp;rsquo;t broken anything after each change. (It would be great if you have automated tests to check this for you.)&lt;/p&gt;
+
+&lt;h2&gt;Let&amp;rsquo;s start&lt;/h2&gt;
+
+&lt;p&gt;I&amp;rsquo;ve taken a small sample from a project I worked on recently. (The code is altered slightly for the purpose of this article.) The CSS was not built with maintainability in mind. As the code changed daily and developers could not fully understand the impact of changes they were making, quite a few bugs were introduced. But, it&amp;rsquo;s never too late to start refactoring.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start with the HTML. A simple component that summarizes information from another page:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;ci&amp;quot;&amp;gt;
+    &amp;lt;a href=&amp;quot;/episodes/the-label-maker&amp;quot;&amp;gt;
+        &amp;lt;h2&amp;gt;Episode: The Label Maker&amp;lt;/h2&amp;gt;
+        &amp;lt;div class=&amp;quot;ci-content&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;visualcontent&amp;quot;&amp;gt;
+                &amp;lt;img src=&amp;quot;/images/some-image.jpg&amp;quot;&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;panel&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &amp;quot;the Drake&amp;#39;s&amp;quot; wedding.&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;cta-label&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Watch episode&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The corresponding stylesheet:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;div.ci {
+    position: relative;
+    margin-bottom: 70px;
+
+    h2 {
+        color: #c40037;
+    }
+
+    a {
+        display: block;
+        text-decoration: none;
+
+        &amp;amp;:hover {
+            transition: opacity 0.2s ease;
+
+            img {
+                opacity: 0.7;
+            }
+        }
+
+        img {
+            transform: translateZ(0);
+            transition: opacity 0.2s ease;
+            opacity: 1;
+        }
+    }
+
+    .ci-content {
+        .visualcontent {
+            height: 200px;
+            overflow: hidden;
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .panel {
+            background: url(&amp;#39;../images/backgrounds/arrow-bg.png&amp;#39;) center right no-repeat;
+            padding: 30px 60px 30px 30px;
+        }
+
+        .cta-label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 170px;
+            background: #c40037;
+            z-index: 20;
+
+            p {
+                color: #FFFFFF;
+                padding: 15px 30px 15px 20px;
+                text-transform: uppercase;
+                font: {
+                    weight: 700;
+                }
+                line-height: 17px;
+            }
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The goal is to increase maintainability and ease of use for developers. With that in mind, a few problems can be spotted.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The class names are inconsistent: some are hyphenated, others are not.&lt;/li&gt;
+&lt;li&gt;Abbreviations in class names.&lt;/li&gt;
+&lt;li&gt;The CSS is too tightly coupled to the HTML by element selectors.&lt;/li&gt;
+&lt;li&gt;Re-usability is lowered by the deep nesting of selectors.&lt;/li&gt;
+&lt;li&gt;The CSS contains inconsistent values and uses properties with too big a scope.&lt;/li&gt;
+&lt;li&gt;Lack of HTML5 elements.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let&amp;rsquo;s further explain and solve these problems.&lt;/p&gt;
+
+&lt;h2&gt;Inconsistent class names (1)&lt;/h2&gt;
+
+&lt;p&gt;Class names need to be consistent, predictable and readable. Inconsistencies slow down development when reading and when adding code. Consistent naming, however, gives developers a solid starting point when they need to add code. My preference is to place a hyphen between nouns. Whatever yours is, just make sure to apply it every time.&lt;/p&gt;
+
+&lt;p&gt;In this case, &lt;code&gt;visualcontent&lt;/code&gt; should be hyphenated to be consistent with other classes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;visual-content&amp;quot;&amp;gt;
+    &amp;lt;img src=&amp;quot;/images/some-image.jpg&amp;quot;&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;.visual-content {
+    height: 200px;
+    overflow: hidden;
+
+    …
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Abbreviations in class names (2)&lt;/h2&gt;
+
+&lt;p&gt;Abbreviations shorten code and shorter code is better, right? Not if you&amp;rsquo;re new to a project. If you have no idea what these abbreviations mean, you cannot properly understand the code and confidently make changes. This problem is avoided by fully writing out class names.&lt;/p&gt;
+
+&lt;p&gt;In this case, &lt;code&gt;ci&lt;/code&gt; and &lt;code&gt;cta&lt;/code&gt; are abbreviations of &lt;code&gt;content-item&lt;/code&gt; and &lt;code&gt;call-to-action&lt;/code&gt;. Let&amp;rsquo;s make the changes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;content-item&amp;quot;&amp;gt;
+    &amp;lt;a href=&amp;quot;/episodes/the-label-maker&amp;quot;&amp;gt;
+        &amp;lt;h2&amp;gt;Episode: The Label Maker&amp;lt;/h2&amp;gt;
+        &amp;lt;div class=&amp;quot;content-item-content&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;visual-content&amp;quot;&amp;gt;
+                &amp;lt;img src=&amp;quot;/images/some-image.jpg&amp;quot;&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;panel&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &amp;quot;the Drake&amp;#39;s&amp;quot; wedding.&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;call-to-action-label&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Watch episode&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;content-item-content&lt;/code&gt; is not a great name, but that will be taken care of in the next step.&lt;/p&gt;
+
+&lt;h2&gt;Tight coupling (3) &amp;amp; low re-usability (4)&lt;/h2&gt;
+
+&lt;p&gt;Using element selectors (&lt;code&gt;div { }&lt;/code&gt;) means you can never change the HTML without changing the CSS and vice versa. The CSS has hard dependencies on what type of HTML element is used. If a developer is unaware of these dependencies and makes changes to the HTML, the design will break. In this case, the &lt;code&gt;p&lt;/code&gt; cannot be changed to a &lt;code&gt;div&lt;/code&gt; without unforeseen consequences. Especially in projects where code changes rapidly, this can easily lead to time-consuming bugs.&lt;/p&gt;
+
+&lt;p&gt;Similarly, the nesting of selectors adds unnecessary dependencies. It means things are styled based on where they are in the hierarchy, not on what they are. They cannot be moved around without breaking something. Returning to our example, what if &lt;code&gt;call-to-action&lt;/code&gt; needs to be used in another component? Right now, it&amp;rsquo;s tied to the &lt;code&gt;.content-item&lt;/code&gt; component and cannot be used elsewhere.&lt;/p&gt;
+
+&lt;p&gt;The scalable solution to both these problems is to use classes for each element and adopt a naming scheme. I highly recommend a &lt;a href=&quot;http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/&quot;&gt;BEM-like naming&lt;/a&gt; for components and simple hyphenation for other utility classes, but feel free to pick your own favourite scheme.&lt;/p&gt;
+
+&lt;p&gt;First, let&amp;rsquo;s add a class with a BEM name to each element that needs to be styled. In the process, I&amp;rsquo;ll rename &lt;code&gt;content-item-content&lt;/code&gt; to &lt;code&gt;content-item__body&lt;/code&gt; to better reflect what it does. I&amp;rsquo;ll drop the &lt;code&gt;-label&lt;/code&gt;-part of &lt;code&gt;call-to-action-label&lt;/code&gt; as well.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;content-item&amp;quot;&amp;gt;
+    &amp;lt;a href=&amp;quot;/episodes/the-label-maker&amp;quot; class=&amp;quot;content-item__link&amp;quot;&amp;gt;
+        &amp;lt;h2 class=&amp;quot;content-item__title&amp;quot;&amp;gt;Episode: The Label Maker&amp;lt;/h2&amp;gt;
+        &amp;lt;div class=&amp;quot;content-item__body&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__visual&amp;quot;&amp;gt;
+                &amp;lt;img src=&amp;quot;/images/some-image.jpg&amp;quot; class=&amp;quot;content-item__image&amp;quot;&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__text&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &amp;quot;the Drake&amp;#39;s&amp;quot; wedding.&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__call-to-action&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Watch episode&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next up, replace the element selectors with the new BEM-classes and remove their nesting.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.content-item {
+    position: relative;
+    margin-bottom: 70px;
+
+    a {
+        display: block;
+        text-decoration: none;
+
+        &amp;amp;:hover {
+            transition: opacity 0.2s ease;
+
+            img {
+                opacity: 0.7;
+            }
+        }
+
+        img {
+            transform: translateZ(0);
+            transition: opacity 0.2s ease;
+            opacity: 1;
+        }
+    }
+}
+
+.content-item__title {
+    color: #c40037;
+}
+
+.content-item__visual {
+    height: 200px;
+    overflow: hidden;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
+
+.content-item__text {
+    background: url(&amp;#39;../images/backgrounds/arrow-bg.png&amp;#39;) center right no-repeat;
+    padding: 30px 60px 30px 30px;
+}
+
+.content-item__call-to-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 170px;
+    background: #c40037;
+    z-index: 20;
+
+    p {
+        color: #FFFFFF;
+        padding: 15px 30px 15px 20px;
+        text-transform: uppercase;
+        font: {
+            weight: 700;
+        }
+        line-height: 17px;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are fewer dependencies already. Notice how we started with several elements nested inside a &lt;code&gt;.ci-content { }&lt;/code&gt; selector. After refactoring, they aren&amp;rsquo;t nested anymore. We&amp;rsquo;ve gained flexibility: they can be moved around in the HTML without the layout breaking.&lt;/p&gt;
+
+&lt;p&gt;There are still some element selectors, so this step is not yet finished. Let&amp;rsquo;s introduce some abstractions. Right now, the CSS for &lt;code&gt;content-item__call-to-action&lt;/code&gt; consists of two parts: its positioning inside &lt;code&gt;content-item&lt;/code&gt; and how it&amp;rsquo;s supposed to look (colours et cetera). It would be good if we created a separate class for the latter so it can be re-used elsewhere.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.content-item__call-to-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 170px;
+    z-index: 20;
+}
+
+.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+        weight: 700;
+    }
+    line-height: 17px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    background: #c40037;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Both classes need to be applied to the corresponding element. (When working with BEM syntax, it can be a little hard to distinguish class names. Separate the class names with two spaces to improve  readability.)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;content-item__call-to-action  call-to-action&amp;quot;&amp;gt;
+    &amp;lt;p&amp;gt;Watch episode&amp;lt;/p&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s get rid of the &lt;code&gt;img&lt;/code&gt; selector next. Its task is to make the image in &lt;code&gt;content-item&lt;/code&gt; stretch the full width of the container. That seems like something that can be used in other places as well. A perfect candidate for a utility class. (Try to keep the number of properties inside utility classes as small as possible.)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.content-item__visual {
+    height: 200px;
+    overflow: hidden;  
+}
+
+.full-width {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+&amp;lt;div class=&amp;quot;content-item__visual&amp;quot;&amp;gt;
+    &amp;lt;img src=&amp;quot;/images/some-image.jpg&amp;quot; class=&amp;quot;content-item__image  full-width&amp;quot;&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The only element selector left is the &lt;code&gt;a&lt;/code&gt; selector. It handles two things:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Making sure the entire &lt;code&gt;content-item&lt;/code&gt; is clickable and has no underline.&lt;/li&gt;
+&lt;li&gt;Creating a fancy hover effect.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It&amp;rsquo;s quite possible removing link underlines is something that will need to be done in other places, so let&amp;rsquo;s make it a utility class. I&amp;rsquo;ve named it &lt;code&gt;block-link&lt;/code&gt; to make it a bit more generic.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.block-link {
+    display: block;
+    text-decoration: none;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The hover effect is placed on the &lt;code&gt;a&lt;/code&gt; element. That&amp;rsquo;s an ancient leftover from a time where &lt;code&gt;:hover&lt;/code&gt; only worked on actual hyperlinks in Internet Explorer. We&amp;rsquo;re way past that, so let&amp;rsquo;s move the &lt;code&gt;:hover&lt;/code&gt; to  &lt;code&gt;content-item&lt;/code&gt;. Also notice how the transition is defined on both the element and the hover state. That&amp;rsquo;s unnecessary: when working with transitions, the transition needs to be defined only on the element, not the special state. On hover, just change the property that needs to be &amp;lsquo;transitioned&amp;rsquo;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.content-item__image {
+    transform: translateZ(0);
+    transition: opacity 0.2s ease;
+
+    .content-item:hover &amp;amp; {
+        opacity: 0.7;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After all this refactoring, the CSS is a lot more readable. Instead of working your way through multiple nested selectors, it&amp;rsquo;s now easy to see what each class does.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+      weight: 700;
+    }
+    line-height: 17px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    background: #c40037;
+}
+
+.full-width {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.block-link {
+    display: block;
+    text-decoration: none;
+}
+
+.content-item {
+    position: relative;
+    margin-bottom: 70px;
+}
+
+.content-item__title {
+    color: #c40037;
+}
+
+.content-item__visual {
+    height: 200px;
+    overflow: hidden;
+}
+
+.content-item__image {
+    transform: translateZ(0);
+    transition: opacity 0.2s ease;
+
+    .content-item:hover &amp;amp; {
+        opacity: 0.7;
+    }
+}
+
+.content-item__text {
+    background: url(&amp;#39;../images/backgrounds/arrow-bg.png&amp;#39;) center right no-repeat;
+    padding: 30px 60px 30px 30px;
+}
+
+.content-item__call-to-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 170px;
+    z-index: 20;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The HTML:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;content-item&amp;quot;&amp;gt;
+    &amp;lt;a href=&amp;quot;/episodes/the-label-maker&amp;quot; class=&amp;quot;content-item__link  block-link&amp;quot;&amp;gt;
+        &amp;lt;h2 class=&amp;quot;content-item__title&amp;quot;&amp;gt;Episode: The Label Maker&amp;lt;/h2&amp;gt;
+        &amp;lt;div class=&amp;quot;content-item__body&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__visual&amp;quot;&amp;gt;
+                  &amp;lt;img src=&amp;quot;/images/some-image.jpg&amp;quot; class=&amp;quot;content-item__image  full-width&amp;quot;&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__text&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &amp;quot;the Drake&amp;#39;s&amp;quot; wedding.&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__call-to-action  call-to-action&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Watch episode&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Inconsistent values and properties with too big a scope (5)&lt;/h2&gt;
+
+&lt;p&gt;When using colours in CSS, it&amp;rsquo;s easy to introduce inconsistencies in their notations. My preference is to always use lowercase and use the shorthand three digit notation where possible. In our example, two types of casing are used. One color definition needs to change:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+        weight: 700;
+    }
+    line-height: 17px;
+    color: #fff; // Was: #FFFFFF
+    text-transform: uppercase;
+    background: #c40037;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There&amp;rsquo;s also a problem with the way the backgrounds are defined. The shorthand syntax (&lt;code&gt;background: ...&lt;/code&gt;) seems convenient because it&amp;rsquo;s shorter. However, if you define a background image on an element, and at a later point in the stylesheet you define a background colour with the shorthand syntax, the background image is removed.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.johnson-rod {
+    background-image: url(../images/johnson02.jpg);
+}
+
+// ... 
+
+.johnson-rod {
+    background: #c43593;
+    // Oops, the previously defined background image is now removed from the element.
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So, be careful with shorthand syntax. It can lead to unintended behaviour. My guideline: only use it if you&amp;rsquo;re absolutely sure you want to change all properties that are affected by the shorthand. If you want to change only one property, just use that. &lt;/p&gt;
+
+&lt;p&gt;After refactoring this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+        weight: 700;
+    }
+    line-height: 17px;
+    color: #fff;
+    text-transform: uppercase;
+    background-color: #c40037;
+}
+
+.content-item__text {
+    background-image: url(&amp;#39;../images/backgrounds/arrow-bg.png&amp;#39;);
+    background-position: center right;
+    background-repeat: no-repeat;
+    padding: 30px 60px 30px 30px;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Lack of HTML5 elements (6)&lt;/h2&gt;
+
+&lt;p&gt;HTML5 has been around for a while now. It can&amp;rsquo;t hurt to actually use it to improve the semantics of the code.&lt;/p&gt;
+
+&lt;p&gt;The entire block can be placed anywhere on the page without losing its meaning, so it&amp;rsquo;s fit to be an &lt;code&gt;article&lt;/code&gt; element. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;article class=&amp;quot;content-item&amp;quot;&amp;gt;
+    &amp;lt;a href=&amp;quot;/episodes/the-label-maker&amp;quot; class=&amp;quot;content-item__link  block-link&amp;quot;&amp;gt;
+        &amp;lt;h2 class=&amp;quot;content-item__title&amp;quot;&amp;gt;Episode: The Label Maker&amp;lt;/h2&amp;gt;
+        &amp;lt;div class=&amp;quot;content-item__body&amp;quot;&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__visual&amp;quot;&amp;gt;
+                  &amp;lt;img src=&amp;quot;/images/some-image.jpg&amp;quot; class=&amp;quot;content-item__image  full-width&amp;quot;&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__text&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &amp;quot;the Drake&amp;#39;s&amp;quot; wedding.&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__call-to-action  call-to-action&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Watch episode&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/a&amp;gt;
+&amp;lt;/article&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Images and other media can be marked up more sematically in HTML5, so let&amp;rsquo;s make the visual a &lt;code&gt;figure&lt;/code&gt; element. Also, let&amp;rsquo;s add &lt;code&gt;title&lt;/code&gt; and &lt;code&gt;alt&lt;/code&gt; attributes for accessibility.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;figure class=&amp;quot;content-item__visual&amp;quot;&amp;gt;
+    &amp;lt;img src=&amp;quot;/images/some-image.jpg&amp;quot; class=&amp;quot;content-item__image  full-width&amp;quot; alt=&amp;quot;Episode image: The Label Maker&amp;quot; title=&amp;quot;The Label Maker&amp;quot;&amp;gt;
+&amp;lt;/figure&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;The end result (for now)&lt;/h2&gt;
+
+&lt;p&gt;HTML:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;article class=&amp;quot;content-item&amp;quot;&amp;gt;
+    &amp;lt;a href=&amp;quot;/episodes/the-label-maker&amp;quot; class=&amp;quot;content-item__link  block-link&amp;quot;&amp;gt;
+        &amp;lt;h2 class=&amp;quot;content-item__title&amp;quot;&amp;gt;Episode: The Label Maker&amp;lt;/h2&amp;gt;
+        &amp;lt;div class=&amp;quot;content-item__body&amp;quot;&amp;gt;
+            &amp;lt;figure class=&amp;quot;content-item__visual&amp;quot;&amp;gt;
+                &amp;lt;img src=&amp;quot;/images/some-image.jpg&amp;quot; class=&amp;quot;content-item__image  full-width&amp;quot; alt=&amp;quot;Episode image: The Label Maker&amp;quot; title=&amp;quot;The Label Maker&amp;quot;&amp;gt;
+            &amp;lt;/figure&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__text&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Jerry has two tickets to the Super Bowl but he cannot attend due to &amp;quot;the Drake&amp;#39;s&amp;quot; wedding.&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+            &amp;lt;div class=&amp;quot;content-item__call-to-action  call-to-action&amp;quot;&amp;gt;
+                &amp;lt;p&amp;gt;Watch episode&amp;lt;/p&amp;gt;
+            &amp;lt;/div&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/a&amp;gt;
+&amp;lt;/article&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;CSS:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.call-to-action {
+    padding: 15px 30px 15px 20px;
+    font: {
+        weight: 700;
+    }
+    line-height: 17px;
+    color: #fff;
+    text-transform: uppercase;
+    background-color: #c40037;
+}
+
+.full-width {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.block-link {
+    display: block;
+    text-decoration: none;
+}
+
+.content-item {
+    position: relative;
+    margin-bottom: 70px;
+}
+
+.content-item__title {
+    color: #c40037;
+}
+
+.content-item__visual {
+    height: 200px;
+    overflow: hidden;
+}
+
+.content-item__image {
+    transform: translateZ(0);
+    transition: opacity 0.2s ease;
+
+    .content-item:hover &amp;amp; {
+        opacity: 0.7;
+    }
+}
+
+.content-item__text {
+    padding: 30px 60px 30px 30px;
+    background-image: url(&amp;#39;../images/backgrounds/arrow-bg.png&amp;#39;);
+    background-position: center right;
+    background-repeat: no-repeat;        
+}
+
+.content-item__call-to-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 170px;
+    z-index: 20;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Of course, there are a couple of things that can be improved.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The reasoning behind the decisions should be documented with comments.&lt;/li&gt;
+&lt;li&gt;Add namespaces to classes to indicate their scope and intent.&lt;/li&gt;
+&lt;li&gt;Introduce SASS/LESS variables.&lt;/li&gt;
+&lt;li&gt;The pixel units can be changed to relative units to improve proportional scaling, which is helpful when designing responsive pages.&lt;/li&gt;
+&lt;li&gt;Improve browser support by applying vendor prefixes to &lt;code&gt;transform&lt;/code&gt; and &lt;code&gt;transition&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;To sum up&lt;/h2&gt;
+
+&lt;p&gt;The code is now more readable, extendable and maintainable. (I&amp;rsquo;m sure a few other &lt;em&gt;able&lt;/em&gt;-adjectives can be applied, but three is enough.)&lt;/p&gt;
+
+&lt;p&gt;If you have any questions about how to create more scalable CSS: feel free to contact me; I might be available to help you get started.&lt;/p&gt;
+</content>
+		<author>
+      <name>Robert van Kempen</name>
+    </author>
+	</entry>
+  
+	<entry>
+		<title>Naming SASS colour variables</title>
+		<link href="http://donormal.com/writing/naming-sass-colour-variables" />
+		<id>http://donormal.com/writing/naming-sass-colour-variables</id>
+		<published>Mon, 26 Jan 2015 23:12:00 +0100</published>
+		
+		<content>&lt;p&gt;Naming is hard.&lt;br&gt;
+Naming in software development is hard.&lt;br&gt;
+Naming your SASS colour variables is the hardest of all. Not as hard as making it through one episode of Family Guy, but still.&lt;/p&gt;
+
+&lt;h2&gt;An example&lt;/h2&gt;
+
+&lt;p&gt;A simple design could start out with these colours.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$blue: #0d6bac;
+$light-blue: #60a5d6;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The design is tweaked by adding another colour.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$blue: #0d6bac;
+$light-blue: #60a5d6;
+$lighter-blue: #b0d2e9;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Another design change.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$blue: #0d6bac;
+$light-blue: #60a5d6;
+$lighter-blue: #b0d2e9;
+$even-lighter-blue: #daecf8;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Already it&amp;rsquo;s a mess, even with as few as four colours. &lt;code&gt;lighter-blue&lt;/code&gt;? Lighter than what? This naming scheme isn&amp;rsquo;t very maintainable, yet it&amp;rsquo;s how a lot of projects describe their SASS colours.&lt;/p&gt;
+
+&lt;h2&gt;The solution&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;The problem comes from the fact that the names are chosen arbitrarily.&lt;/strong&gt; There&amp;rsquo;s no reference point to base your next variable on.&lt;/p&gt;
+
+&lt;p&gt;A colour name generator fixes this: it takes a hex or RGB value and returns a colour name that you can use in your variable name. A generator I frequently use is &lt;a href=&quot;http://chir.ag/projects/name-that-color/&quot;&gt;Name That Color&lt;/a&gt;. And if you include the hue as well, your variables are &lt;strong&gt;usable, predictable and maintainable&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s apply the names from &lt;em&gt;Name That Color&lt;/em&gt; to our example.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Naming scheme: ${hue}-{name}
+// http://chir.ag/projects/name-that-color/
+$blue-denim: #0d6bac;
+$blue-danube: #60a5d6;
+$blue-spindle: #b0d2e9;
+$blue-link-water: #daecf8;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A vast improvement: it&amp;rsquo;s easy to identify each colour and most of all, it&amp;rsquo;s a lot easier to add new colours. (You should place all colours in a separate &lt;code&gt;_colors.scss&lt;/code&gt; file.)&lt;/p&gt;
+
+&lt;h2&gt;Next&lt;/h2&gt;
+
+&lt;p&gt;These colours are not semantic enough to be used directly, so the next step would be to assign these variables to other variables used in your page elements.&lt;/p&gt;
+
+&lt;p&gt;For example, in &lt;code&gt;_menu.scss&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Apply colors locally
+$menu-border-color: $blue-danube;
+
+// Menu block
+.menu {
+    …
+    border-color: $menu-border-color;
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<author>
+      <name>Robert van Kempen</name>
+    </author>
+	</entry>
+  
+	<entry>
+		<title>Revisiting visited links</title>
+		<link href="http://donormal.com/writing/revisiting-visited-links" />
+		<id>http://donormal.com/writing/revisiting-visited-links</id>
+		<published>Thu, 05 Jun 2014 16:40:00 +0200</published>
+		
+		<content>&lt;p&gt;It&amp;rsquo;s easier to decide where you want to go if you know where you&amp;rsquo;ve been.&lt;/p&gt;
+
+&lt;p&gt;Sounds like the start of some awful seminar on how to improve your life. It isn&amp;rsquo;t. It&amp;rsquo;s a principle of digital design that seems to have been forgotten. This is a reminder to designers out there.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;By default, browsers show links to already visited pages in a different colour. They&amp;rsquo;re purple. They actually feel used. A great feature, because people scan pages for things they want to read, skipping what they don&amp;rsquo;t. It&amp;rsquo;s one of those details that can unconsciously delight your users.&lt;/p&gt;
+
+&lt;p&gt;And it&amp;rsquo;s a detail that gets thrown away by a lot of designers. One colour for all links seems to be enough, but it&amp;rsquo;s not. Let me show you why.&lt;/p&gt;
+
+&lt;h3&gt;On Medium&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://medium.com&quot;&gt;Medium&lt;/a&gt; is one of the best designed sites out there. The design is deceivingly simple, but every pixel is considered. However, they do not show visited articles in a different colour, and I think they should.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at a side-by-side comparison of their current design and a mockup I made.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/visited-links.png&quot; alt=&quot;Medium.com without and with styling of visited links&quot;&gt; &lt;/p&gt;
+
+&lt;p&gt;On the left, I can&amp;rsquo;t tell which article I&amp;rsquo;ve opened. On the right, I can clearly see I&amp;rsquo;ve read the second and third article. When I look for articles I want to read next, the right image makes more sense.&lt;/p&gt;
+
+&lt;h3&gt;On TheNextWeb&lt;/h3&gt;
+
+&lt;p&gt;Sites that use images as links can apply the same principle. Let&amp;rsquo;s take a look at &lt;a href=&quot;http://thenextweb.com/&quot;&gt;TheNextWeb&lt;/a&gt;, a news site about technology.&lt;/p&gt;
+
+&lt;p&gt;First, the site as they designed it. They do not distinguish visited links from other links.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/visited-links-tnw-01.png&quot; alt=&quot;visited-links-tnw-01&quot;&gt; &lt;/p&gt;
+
+&lt;p&gt;Again, this page can benefit from the visited links principle. A quick mockup results in something like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/visited-links-tnw-02.png&quot; alt=&quot;visited-links-tnw-02&quot;&gt; &lt;/p&gt;
+
+&lt;p&gt;A clear improvement, I believe.&lt;/p&gt;
+
+&lt;p&gt;Note: I use these two sites as an example because they were just the first ones that came to mind. I don&amp;rsquo;t know what their considerations for not using this feature were; perhaps they had good reasons.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;If you&amp;rsquo;re a designer and in charge of a website, consider adding this important detail. It takes just a few minutes and a few lines of CSS to implement. Be the start of a better web.&lt;/p&gt;
+</content>
+		<author>
+      <name>Robert van Kempen</name>
+    </author>
+	</entry>
+  
+	<entry>
+		<title>Finally</title>
+		<link href="http://donormal.com/writing/finally" />
+		<id>http://donormal.com/writing/finally</id>
+		<published>Mon, 14 Apr 2014 16:08:00 +0200</published>
+		
+		<content>&lt;p&gt;I&amp;rsquo;ve been creating for a reasonable number of years. Those years creating were spent creating for others. I had countless ideas of myself, but I always came up with excuses. The guilt of those excuses built up over time, when, finally, I&amp;rsquo;d had it. Enough was enough.&lt;br&gt;
+You&amp;rsquo;re looking at the result: a new website, just for me. A wanky piece of self-indulgence, but it&amp;rsquo;s mine.&lt;/p&gt;
+
+&lt;h3&gt;Where I pretend it was a struggle&lt;/h3&gt;
+
+&lt;p&gt;When you&amp;rsquo;re planning to tell the internet about yourself, you have to figure out who you are.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Am I a web developer who knows about typography and layouts?&lt;/li&gt;
+&lt;li&gt;Am I a designer who knows about code?&lt;/li&gt;
+&lt;li&gt;Am I a programmer who knows about the web?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I still don&amp;rsquo;t know, and I don&amp;rsquo;t want to choose. I&amp;rsquo;m all of the above and I like it.&lt;br&gt;
+When trying to start building my personal website, it posed a bit of a problem though: I wanted to do everything myself, in the best way possible, lest I perceive myself an unworthy designer and developer. This lead to endless stalling. &amp;ldquo;I need to design a blog. But then I need somewhere to write posts. I guess I need some sort of admin interface. My situation is very unique, so I have to build it myself.&amp;rdquo; &lt;/p&gt;
+
+&lt;p&gt;I think I&amp;rsquo;ve started over at least five times.&lt;/p&gt;
+
+&lt;p&gt;Then, I decided to let go. Make a design and let other software publish the site. Not writing all the code for my own website seemed like a scary premise, but peace of mind and an actual result loomed at the end of this life-draining ordeal.&lt;/p&gt;
+
+&lt;p&gt;Finally, I did it. Thanks for visiting.&lt;/p&gt;
+
+&lt;h3&gt;Now what?&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I&amp;rsquo;m adding examples of past work as I go, and I&amp;rsquo;m starting up the habit of writing posts.&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;m working on a football website called &lt;a href=&quot;http://clubwatcher.nl&quot;&gt;Clubwatcher&lt;/a&gt;. (Go to &lt;a href=&quot;http://feyenoord.clubwatcher.nl&quot;&gt;our Feyenoord page&lt;/a&gt; if you&amp;rsquo;re a supporter of Feyenoord.)&lt;/li&gt;
+&lt;li&gt;I have several poster projects lined up, ready for print.&lt;/li&gt;
+&lt;li&gt;I&amp;rsquo;m availabe for hire, if you need something designed or programmed.&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+		<author>
+      <name>Robert van Kempen</name>
+    </author>
+	</entry>
+  
+
+</feed>
