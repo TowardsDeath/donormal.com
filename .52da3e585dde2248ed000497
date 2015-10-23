@@ -1,5 +1,5 @@
 ---
-time: 1445601053
+time: 1445601256
 inventory:
   "/home/index.html":
     md5: c49a866edac02630e7f65718e9b343c6
@@ -17,8 +17,8 @@ inventory:
     md5: 1bed0ffe6a257a83abc5f25b5c685ff2
     time: 1445601045
   "/writing/talk-re-usable-and-scalable-css/index.html":
-    md5: 82053259513a335dbfaf2e98db57c092
-    time: 1445601046
+    md5: 9d37e8e0211fcf6f13badb3f989cce17
+    time: 1445601253
   "/writing/finding-outbound-links-with-javascript/index.html":
     md5: 18eb55acadd653d1a60805e8135dc5a0
     time: 1445601046
@@ -65,11 +65,11 @@ inventory:
     md5: fccaa07c5588d7d198a2aca0a4151449
     time: 1441048698
   "/sitemap.xml":
-    md5: c19841375116a2d43211084b0fa106ef
-    time: 1445601049
+    md5: a2df42d1c03d602914af61370ce62bee
+    time: 1445601254
   "/feed.xml":
-    md5: 0e57b72c7609d06f0789825dea0b2856
-    time: 1445601049
+    md5: 8a8101277bbc3c6909e26d983278b5b9
+    time: 1445601254
   "/assets/photo-me.jpg":
     md5: f6b9317dd4ae7191d5528b12c9985827
     time: 1441048703
