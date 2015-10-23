@@ -4,9 +4,26 @@
 	<title>Do Normal</title>
 	<link href="http://donormal.com/feed.xml" rel="self" />
 	<link href="http://donormal.com" />
-	<updated>Mon, 31 Aug 2015 21:18:19 +0200</updated>
+	<updated>Fri, 23 Oct 2015 13:50:49 +0200</updated>
 
 	
+	<entry>
+		<title>Talk: re-usable and scalable CSS</title>
+		<link href="http://donormal.com/writing/talk-re-usable-and-scalable-css" />
+		<id>http://donormal.com/writing/talk-re-usable-and-scalable-css</id>
+		<published>Fri, 23 Oct 2015 13:31:00 +0200</published>
+		
+		<content>&lt;p&gt;Last Wednesday I gave a small talk at a development clinic for my colleagues at &lt;a href=&quot;http://zicht.nl&quot;&gt;Zicht Online&lt;/a&gt;. We regularly organise these clinics to share cool stuff with the people we work with. We eat semi-healthy food, we talk about technology, and we experiment with new languages, frameworks and development software.&lt;/p&gt;
+
+&lt;p&gt;In the talk I gave I explain the thought process behind re-usable and scalable CSS, and I show some techniques to achieve CSS that&amp;rsquo;s not actually a maintenance nightmare.&lt;/p&gt;
+
+&lt;p&gt;You can find the slides at my Speaker Deck profile: &lt;a href=&quot;https://speakerdeck.com/donormal/re-usable-and-scalable-css&quot;&gt;Re-usable and Scalable CSS&lt;/a&gt;&lt;/p&gt;
+</content>
+		<author>
+      <name>Robert van Kempen</name>
+    </author>
+	</entry>
+  
 	<entry>
 		<title>Finding outbound links with JavaScript</title>
 		<link href="http://donormal.com/writing/finding-outbound-links-with-javascript" />

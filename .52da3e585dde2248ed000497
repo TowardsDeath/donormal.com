@@ -1,12 +1,12 @@
 ---
-time: 1441048740
+time: 1445601053
 inventory:
   "/home/index.html":
-    md5: da4ad3c206a087332eb697a4e77e2693
-    time: 1441048695
+    md5: c49a866edac02630e7f65718e9b343c6
+    time: 1445601045
   "/index.html":
-    md5: da4ad3c206a087332eb697a4e77e2693
-    time: 1441048695
+    md5: c49a866edac02630e7f65718e9b343c6
+    time: 1445601045
   "/who/index.html":
     md5: 59c16131ce26246c5a51de717ab09a5d
     time: 1441048696
@@ -14,11 +14,14 @@ inventory:
     md5: f35e2dcdd15cb1b1660f7c94d01ab9f6
     time: 1441048696
   "/writing/index.html":
-    md5: 86d3e9566befff12308d01bdc99a7903
-    time: 1441048696
+    md5: 1bed0ffe6a257a83abc5f25b5c685ff2
+    time: 1445601045
+  "/writing/talk-re-usable-and-scalable-css/index.html":
+    md5: 82053259513a335dbfaf2e98db57c092
+    time: 1445601046
   "/writing/finding-outbound-links-with-javascript/index.html":
-    md5: 30ac54f93b978e737885333449a6b3ba
-    time: 1441048697
+    md5: 18eb55acadd653d1a60805e8135dc5a0
+    time: 1445601046
   "/writing/refactoring-to-scalable-css/index.html":
     md5: 86a0e67fda94426b197add6e95d214d9
     time: 1441048697
@@ -34,6 +37,12 @@ inventory:
   "/writing/archive/index.html":
     md5: 069623bc2158f7791828090b9e0d4b9d
     time: 1441048697
+  "/writing/tags/index.html":
+    md5: 1953f27a83bf73a649a8f57942ffb34b
+    time: 1445601046
+  "/writing/tags/js/index.html":
+    md5: 58d6c7f4d6c4e7af5946969daa216dc5
+    time: 1441048697
   "/writing/topic/index.html":
     md5: 4b32c12bf7b33ae68b842e939690c601
     time: 1441048697
@@ -43,30 +52,24 @@ inventory:
   "/writing/topic/refactoring/index.html":
     md5: 998fa6b32a14ad6812f9b48ef4a0b0c6
     time: 1441048697
-  "/writing/tags/index.html":
-    md5: d18ca4d49d14b3aba0c97fddcc901179
-    time: 1441048697
-  "/writing/tags/js/index.html":
-    md5: 58d6c7f4d6c4e7af5946969daa216dc5
-    time: 1441048697
   "/store/index.html":
     md5: 7fabdb8c39d7ee2177dd47f384ba0242
     time: 1441048697
   "/work/logos/index.html":
-    md5: 6858da74822320f97075e31062a8027f
-    time: 1441048698
+    md5: 38660249d93795d50c2d67de74970292
+    time: 1445601048
   "/work/rotterdam-abstract/index.html":
-    md5: b1b8e152577893c53ae8e0cccf25f009
-    time: 1441048698
+    md5: 92eca35639fddb68eed215b441333922
+    time: 1445601048
   "/CNAME":
     md5: fccaa07c5588d7d198a2aca0a4151449
     time: 1441048698
   "/sitemap.xml":
-    md5: 5e56edb605551d2f10eb91e7cd2e70aa
-    time: 1441048699
+    md5: c19841375116a2d43211084b0fa106ef
+    time: 1445601049
   "/feed.xml":
-    md5: 37e131351771ca1157b9f4c4b3a78f63
-    time: 1441048699
+    md5: 0e57b72c7609d06f0789825dea0b2856
+    time: 1445601049
   "/assets/photo-me.jpg":
     md5: f6b9317dd4ae7191d5528b12c9985827
     time: 1441048703
