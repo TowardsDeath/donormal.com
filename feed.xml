@@ -4,7 +4,7 @@
 	<title>Do Normal</title>
 	<link href="http://donormal.com/feed.xml" rel="self" />
 	<link href="http://donormal.com" />
-	<updated>Fri, 23 Oct 2015 13:54:14 +0200</updated>
+	<updated>Fri, 23 Oct 2015 13:58:44 +0200</updated>
 
 	
 	<entry>
@@ -15,7 +15,7 @@
 		
 		<content>&lt;p&gt;Last Wednesday I gave a small talk at a development clinic for my colleagues at &lt;a href=&quot;http://zicht.nl&quot;&gt;Zicht Online&lt;/a&gt;. We regularly organise these clinics to share cool stuff with the people we work with. We eat semi-healthy food, we talk about technology, and we experiment with new languages, frameworks and development software.&lt;/p&gt;
 
-&lt;p&gt;I explained the thought process behind re-usable and scalable CSS, and I showed some techniques to achieve CSS that&amp;rsquo;s not actually a maintenance nightmare.&lt;/p&gt;
+&lt;p&gt;I explained the thought process behind re-usable and scalable CSS, and I showed some techniques to achieve CSS that&amp;rsquo;s not actually a maintenance nightmare. There&amp;rsquo;s also a bit about PostCSS as well.&lt;/p&gt;
 
 &lt;p&gt;You can find the slides at my Speaker Deck profile: &lt;a href=&quot;https://speakerdeck.com/donormal/re-usable-and-scalable-css&quot;&gt;Re-usable and Scalable CSS&lt;/a&gt;&lt;/p&gt;
 </content>
