@@ -4,7 +4,7 @@
 	<title>Do Normal</title>
 	<link href="http://donormal.com/feed.xml" rel="self" />
 	<link href="http://donormal.com" />
-	<updated>Thu, 24 Mar 2016 23:09:16 +0100</updated>
+	<updated>Thu, 24 Mar 2016 23:15:13 +0100</updated>
 
 	
 	<entry>
@@ -89,6 +89,8 @@
    }
 }
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Thanks goes out to my colleague &lt;a href=&quot;https://twitter.com/skar&quot;&gt;@skar&lt;/a&gt; for playing the role of &lt;a href=&quot;https://en.wikipedia.org/wiki/Rubber_duck_debugging&quot;&gt;rubber duck&lt;/a&gt; when I came up with this solution.&lt;/p&gt;
 </content>
 		<author>
       <name>Robert van Kempen</name>
