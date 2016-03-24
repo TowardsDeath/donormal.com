@@ -1,5 +1,5 @@
 ---
-time: 1458857753
+time: 1458858334
 inventory:
   "/home/index.html":
     md5: c9c8a73bbd71bff4db39b31e154d9f40
@@ -17,8 +17,8 @@ inventory:
     md5: ad034a6c3168ff54b83a17ca5fa5a3f0
     time: 1458857355
   "/writing/communication-between-css-components/index.html":
-    md5: 50c9a079c6cb6c6e06b681a61797fd9d
-    time: 1458857751
+    md5: 8e6caa6bbe20a07e134e068b3bedcc28
+    time: 1458858332
   "/writing/talk-re-usable-and-scalable-css/index.html":
     md5: 5e42d316846557d52bebc02f39e9458d
     time: 1458857355
@@ -71,11 +71,11 @@ inventory:
     md5: fccaa07c5588d7d198a2aca0a4151449
     time: 1441048698
   "/sitemap.xml":
-    md5: ffb57004077d2404e6d718ac4ad66dd7
-    time: 1458857751
+    md5: 1025202f9af379199733bff9a80b97e0
+    time: 1458858333
   "/feed.xml":
-    md5: 01dccd2284241493cb9bea52120a6204
-    time: 1458857751
+    md5: 90f483901076024e357376b3e3459bb7
+    time: 1458858333
   "/assets/photo-me.jpg":
     md5: f6b9317dd4ae7191d5528b12c9985827
     time: 1441048703
