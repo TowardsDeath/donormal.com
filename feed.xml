@@ -4,9 +4,97 @@
 	<title>Do Normal</title>
 	<link href="http://donormal.com/feed.xml" rel="self" />
 	<link href="http://donormal.com" />
-	<updated>Fri, 23 Oct 2015 13:58:44 +0200</updated>
+	<updated>Thu, 24 Mar 2016 23:09:16 +0100</updated>
 
 	
+	<entry>
+		<title>Communication between CSS components</title>
+		<link href="http://donormal.com/writing/communication-between-css-components" />
+		<id>http://donormal.com/writing/communication-between-css-components</id>
+		<published>Thu, 24 Mar 2016 22:19:00 +0100</published>
+		
+		<content>&lt;p&gt;If you’re a developer that builds web interfaces, I assume you’ve divided that interface into separate components. When writing CSS, you&amp;rsquo;ve probably divided your codebase using that same structure. For example, the styling for your button component might be defined in a &lt;code&gt;button&lt;/code&gt; class. &lt;/p&gt;
+
+&lt;p&gt;(If you&amp;rsquo;re unfamiliar with UI components: you should give it a try. Read these if you want more background information: &lt;a href=&quot;http://alistapart.com/article/from-pages-to-patterns-an-exercise-for-everyone&quot;&gt;From Pages to Patterns: An Exercise for Everyone&lt;/a&gt; and &lt;a href=&quot;http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/&quot;&gt;More Transparent UI Code with Namespaces&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;If set up correctly, components know nothing about other components. The advantage of this separation is that you can throw each component anywhere on a page. Changes to the design are also easier, as an adjustment to a component does not influence other components.&lt;/p&gt;
+
+&lt;h2&gt;The problem&lt;/h2&gt;
+
+&lt;p&gt;It becomes problematic when you want one component to influence other parts of the UI. I recently ran into this. I had a card component that contained a separate button. When hovered, the button changed colour. I wanted to trigger that hover style when the entire card was hovered.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.c-card { 
+   &amp;amp;:hover {
+      .c-button {
+         background-color: $some-color;
+      }
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The code above works, but violates the principle of separation: the card explictly references the &lt;code&gt;c-button&lt;/code&gt; class.&lt;/p&gt;
+
+&lt;h2&gt;The solution&lt;/h2&gt;
+
+&lt;p&gt;I believe the answer lies in state modifiers. I use those to indicate a component has some temporary state. For example, a component can be collapsed.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.c-component {
+   &amp;amp;.is-collapsed {
+      // Styling for collapsed state.
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These state modifier can also be used to trigger hover styles in a nested component. JS has a similar construct for events called &amp;ldquo;propagation&amp;rdquo;, so let&amp;rsquo;s steal that name and create a state modifier &lt;code&gt;has-hover-propagation&lt;/code&gt;. It works like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.c-button {
+   &amp;amp;:hover,
+   &amp;amp;:active,
+   &amp;amp;:focus,
+   .has-hover-propagation:hover &amp;amp;,
+   .has-hover-propagation:active &amp;amp;,
+   .has-hover-propagation:focus &amp;amp; {
+      background-color: $some-color;
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;article class=&amp;quot;c-card  has-hover-propagation&amp;quot;&amp;gt;
+   &amp;lt;!-- Content --&amp;gt;
+   &amp;lt;a class=&amp;quot;c-button&amp;quot; href=&amp;quot;http://example.org&amp;quot;&amp;gt;Go&amp;lt;/a&amp;gt;
+&amp;lt;/article&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When the card is hovered, it triggers the button&amp;rsquo;s hover styles via the &lt;code&gt;has-hover-propagation&lt;/code&gt; class. And the separation is still there: the card doesn&amp;rsquo;t know about the button, and vice versa.&lt;/p&gt;
+
+&lt;h2&gt;Automation&lt;/h2&gt;
+
+&lt;p&gt;It can be quite a chore to type six selectors each time you want to define a hover style. Let&amp;rsquo;s automate it via a Sass mixin.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@mixin hover() {
+   &amp;amp;:hover,
+   &amp;amp;:active,
+   &amp;amp;:focus,
+   .has-hover-propagation:hover &amp;amp;,
+   .has-hover-propagation:active &amp;amp;,
+   .has-hover-propagation:focus &amp;amp; {
+      @content;
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;.c-button {
+   @include hover {
+      background-color: $some-color;
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+		<author>
+      <name>Robert van Kempen</name>
+    </author>
+	</entry>
+  
 	<entry>
 		<title>Talk: re-usable and scalable CSS</title>
 		<link href="http://donormal.com/writing/talk-re-usable-and-scalable-css" />

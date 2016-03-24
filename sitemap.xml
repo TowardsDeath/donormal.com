@@ -10,7 +10,7 @@
 	
 		<url>
 			<loc>http://donormal.com/who</loc>
-			<lastmod>2014-04-15 13:48:44 +0000</lastmod>
+			<lastmod>2016-03-24 21:19:43 +0000</lastmod>
 			<priority>1.0</priority>
 		</url>
 		
@@ -28,6 +28,12 @@
 			<priority>1.0</priority>
 		</url>
 		
+			
+				<url>
+					<loc>http://donormal.com/writing/communication-between-css-components</loc>
+					<lastmod>2016-03-24 21:59:13 +0000</lastmod>
+					<priority>0.5</priority>
+				</url>
 			
 				<url>
 					<loc>http://donormal.com/writing/talk-re-usable-and-scalable-css</loc>

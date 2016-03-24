@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+        <title>Communication between CSS components • Do Normal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="alternate" type="application/rss+xml" href="http://donormal.com/feed.xml">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@_dnrml">
+    <meta name="twitter:title" content="Communication between CSS components">
+    <meta name="twitter:description" content="If you’re a developer that builds web interfaces, I assume you’ve divided that interface into separate components. When writing CSS, you&rsquo;ve probably divided your codebase using that same structure. For example, the styling for your button component might be defined in a button class. (If you&rsquo;re unfamiliar with UI components:...">
+    <meta name="twitter:creator" content="@_dnrml">
+
+        <script src="//use.typekit.net/xef1kea.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        <script src="/js/modernizr.custom.62890.js"></script>
+    </head>
+    
+    
+    <body class="page-writing ">
+        <div class="page-wrapper" role="main">
+            <div class="site-header-container">
+                <header class="site-header">
+    <div class="site-title">
+        <a href="/" class="site-title-link"><img src="/images/logo.svg" alt="Do Normal" class="site-logo"></a>
+    </div>
+
+    <nav class="site-navigation" role="menu">
+        <ul class="site-navigation-list">
+        
+            
+        
+            
+                <li class="site-navigation-item"><a href="/who" class="site-navigation-link ">Who?</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/work" class="site-navigation-link ">Work</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/writing" class="site-navigation-link is-current">Writing</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/store" class="site-navigation-link ">Webstore</a></li>
+            
+        
+        </ul>
+    </nav>
+</header>
+            </div>
+
+            <div class="page-content-container">
+                
+
+    <div class="page-title-container">
+    <h1 class="page-title">Communication between CSS components</h1>
+</div>
+
+    <div class="page-content">
+        <div class="page-content-main">
+            <article class="post">
+    
+        <p class="post-deck">How to affect other UI elements while keeping them separated</p>
+    
+    
+    <div class="post-body">
+        <p>If you’re a developer that builds web interfaces, I assume you’ve divided that interface into separate components. When writing CSS, you&rsquo;ve probably divided your codebase using that same structure. For example, the styling for your button component might be defined in a <code>button</code> class. </p>
+
+<p>(If you&rsquo;re unfamiliar with UI components: you should give it a try. Read these if you want more background information: <a href="http://alistapart.com/article/from-pages-to-patterns-an-exercise-for-everyone">From Pages to Patterns: An Exercise for Everyone</a> and <a href="http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/">More Transparent UI Code with Namespaces</a>.)</p>
+
+<p>If set up correctly, components know nothing about other components. The advantage of this separation is that you can throw each component anywhere on a page. Changes to the design are also easier, as an adjustment to a component does not influence other components.</p>
+
+<h2>The problem</h2>
+
+<p>It becomes problematic when you want one component to influence other parts of the UI. I recently ran into this. I had a card component that contained a separate button. When hovered, the button changed colour. I wanted to trigger that hover style when the entire card was hovered.</p>
+
+<pre><code>.c-card { 
+   &amp;:hover {
+      .c-button {
+         background-color: $some-color;
+      }
+   }
+}
+</code></pre>
+
+<p>The code above works, but violates the principle of separation: the card explictly references the <code>c-button</code> class.</p>
+
+<h2>The solution</h2>
+
+<p>I believe the answer lies in state modifiers. I use those to indicate a component has some temporary state. For example, a component can be collapsed.</p>
+
+<pre><code>.c-component {
+   &amp;.is-collapsed {
+      // Styling for collapsed state.
+   }
+}
+</code></pre>
+
+<p>These state modifier can also be used to trigger hover styles in a nested component. JS has a similar construct for events called &ldquo;propagation&rdquo;, so let&rsquo;s steal that name and create a state modifier <code>has-hover-propagation</code>. It works like this:</p>
+
+<pre><code>.c-button {
+   &amp;:hover,
+   &amp;:active,
+   &amp;:focus,
+   .has-hover-propagation:hover &amp;,
+   .has-hover-propagation:active &amp;,
+   .has-hover-propagation:focus &amp; {
+      background-color: $some-color;
+   }
+}
+</code></pre>
+
+<pre><code>&lt;article class=&quot;c-card  has-hover-propagation&quot;&gt;
+   &lt;!-- Content --&gt;
+   &lt;a class=&quot;c-button&quot; href=&quot;http://example.org&quot;&gt;Go&lt;/a&gt;
+&lt;/article&gt;
+</code></pre>
+
+<p>When the card is hovered, it triggers the button&rsquo;s hover styles via the <code>has-hover-propagation</code> class. And the separation is still there: the card doesn&rsquo;t know about the button, and vice versa.</p>
+
+<h2>Automation</h2>
+
+<p>It can be quite a chore to type six selectors each time you want to define a hover style. Let&rsquo;s automate it via a Sass mixin.</p>
+
+<pre><code>@mixin hover() {
+   &amp;:hover,
+   &amp;:active,
+   &amp;:focus,
+   .has-hover-propagation:hover &amp;,
+   .has-hover-propagation:active &amp;,
+   .has-hover-propagation:focus &amp; {
+      @content;
+   }
+}
+</code></pre>
+
+<pre><code>.c-button {
+   @include hover {
+      background-color: $some-color;
+   }
+}
+</code></pre>
+
+    </div>
+    <p class="post-date-container">Published on <time datetime="2016-03-24 22:19:00 +0100" class="post-date">24 March, 2016</time></p>
+
+    
+        
+    
+        
+    
+        
+    
+
+    
+
+    <!--<a class='next nav-icon ss-icon' href='' style='visibility: hidden'>navigateleft</a>
+    <a class='previous nav-icon ss-icon' href='/writing/talk-re-usable-and-scalable-css' style='visibility: visible'>navigateright</a>-->
+</article>
+        </div>
+
+        
+    </div>
+
+    <div class="social-footer">
+    <p>Follow <a href="https://twitter.com/@_dnrml" class="social-footer-link">@_dnrml</a> on Twitter.</p>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>

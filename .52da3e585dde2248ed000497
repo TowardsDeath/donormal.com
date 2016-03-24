@@ -1,75 +1,81 @@
 ---
-time: 1445601525
+time: 1458857367
 inventory:
   "/home/index.html":
-    md5: c49a866edac02630e7f65718e9b343c6
-    time: 1445601045
+    md5: bf652fe224ae88e681ce34bf4461c3f7
+    time: 1458857355
   "/index.html":
-    md5: c49a866edac02630e7f65718e9b343c6
-    time: 1445601045
+    md5: bf652fe224ae88e681ce34bf4461c3f7
+    time: 1458857355
   "/who/index.html":
-    md5: 59c16131ce26246c5a51de717ab09a5d
-    time: 1441048696
+    md5: d6912e82ccc3facddea0452743fadccb
+    time: 1458857355
   "/work/index.html":
-    md5: f35e2dcdd15cb1b1660f7c94d01ab9f6
-    time: 1441048696
+    md5: f5d89058dae29e1978453635644bc669
+    time: 1458857355
   "/writing/index.html":
-    md5: 1bed0ffe6a257a83abc5f25b5c685ff2
-    time: 1445601045
+    md5: ad034a6c3168ff54b83a17ca5fa5a3f0
+    time: 1458857355
+  "/writing/communication-between-css-components/index.html":
+    md5: a08a570b6a2805dc5a961e6a4752e77e
+    time: 1458857355
   "/writing/talk-re-usable-and-scalable-css/index.html":
-    md5: afed819b17deef8e04fbb4036095ae64
-    time: 1445601523
+    md5: 5e42d316846557d52bebc02f39e9458d
+    time: 1458857355
   "/writing/finding-outbound-links-with-javascript/index.html":
-    md5: 18eb55acadd653d1a60805e8135dc5a0
-    time: 1445601046
+    md5: 5af8a17e330f352f810cb771c70979a4
+    time: 1458857355
   "/writing/refactoring-to-scalable-css/index.html":
-    md5: 86a0e67fda94426b197add6e95d214d9
-    time: 1441048697
+    md5: 0cd2263c9406b620001ae226277e6d2d
+    time: 1458857355
   "/writing/naming-sass-colour-variables/index.html":
-    md5: 1c5530fffa1e6e281034f91b3fd88ddf
-    time: 1441048697
+    md5: 6ba91737b8743cbaf1fddd45bd45954e
+    time: 1458857355
   "/writing/revisiting-visited-links/index.html":
-    md5: 22c8334fb877c13af49f7f9a5b32f5dc
-    time: 1441048697
+    md5: 0b57fd5735628754a27f9d16c8931609
+    time: 1458857355
   "/writing/finally/index.html":
-    md5: 628c5ab45dde121eb6443f4656279b4b
-    time: 1441048697
+    md5: 69b1ef211460b6199abf65c7e34f4b7e
+    time: 1458857355
   "/writing/archive/index.html":
-    md5: 069623bc2158f7791828090b9e0d4b9d
-    time: 1441048697
+    md5: a22d47d091a74c24eec6544b9d851209
+    time: 1458857356
   "/writing/tags/index.html":
-    md5: 1953f27a83bf73a649a8f57942ffb34b
-    time: 1445601046
+    md5: f394bfb1033f60a01a401214b2377be3
+    time: 1458857356
   "/writing/tags/js/index.html":
-    md5: 58d6c7f4d6c4e7af5946969daa216dc5
-    time: 1441048697
+    md5: fac1cd85c401f5a01ccb81f362425550
+    time: 1458857356
   "/writing/topic/index.html":
-    md5: 4b32c12bf7b33ae68b842e939690c601
-    time: 1441048697
+    md5: 5eff26b04f29a36d0e694a6d4b9060f1
+    time: 1458857356
   "/writing/topic/css/index.html":
-    md5: f1c9249b6f029138c1ca300b778605e2
-    time: 1441048697
+    md5: a1fcba6798e2c6383f1079b39701eecc
+    time: 1458857356
   "/writing/topic/refactoring/index.html":
-    md5: 998fa6b32a14ad6812f9b48ef4a0b0c6
-    time: 1441048697
+    md5: 1d262e8849b40d21e2ce91fad719e5c8
+    time: 1458857356
   "/store/index.html":
     md5: 7fabdb8c39d7ee2177dd47f384ba0242
     time: 1441048697
+  "/work/firenoord/index.html":
+    md5: c8e54fa162f48ef0c9d24d816d5f6130
+    time: 1458857356
   "/work/logos/index.html":
-    md5: 38660249d93795d50c2d67de74970292
-    time: 1445601048
+    md5: 1cdafbd2f420cd7db7a0592ed63418fd
+    time: 1458857356
   "/work/rotterdam-abstract/index.html":
-    md5: 92eca35639fddb68eed215b441333922
-    time: 1445601048
+    md5: 8e0d14ec3bf7f97911c7e1d24f574151
+    time: 1458857356
   "/CNAME":
     md5: fccaa07c5588d7d198a2aca0a4151449
     time: 1441048698
   "/sitemap.xml":
-    md5: 6b3376bcffd04d8236ac568b06a739a0
-    time: 1445601524
+    md5: 64f9162c58cafb62d6c9961df9c31421
+    time: 1458857356
   "/feed.xml":
-    md5: ab37ffc802d5e4ef3f7a85f9b3baf87b
-    time: 1445601524
+    md5: 2696af5a3aebcad3e2450b7f5429f2c5
+    time: 1458857356
   "/assets/photo-me.jpg":
     md5: f6b9317dd4ae7191d5528b12c9985827
     time: 1441048703
@@ -118,6 +124,12 @@ inventory:
   "/robots.txt":
     md5: 3a64150859c06fd7ef2f04e3fca3216b
     time: 1441048704
+  "/assets/project-firenoord.png":
+    md5: 9b969a6d6613e088591d96d6404ce51d
+    time: 1458857357
+  "/assets/calypso-view.jpg":
+    md5: a7052497886e8c1a89249da0d7538a1c
+    time: 1458857357
   "/assets/project-clubwatcher-logo.png":
     md5: b7f7bde47b5be97f82b6a7f167c23efb
     time: 1441048705
