@@ -4,24 +4,28 @@
 	<title>Do Normal</title>
 	<link href="http://donormal.com/feed.xml" rel="self" />
 	<link href="http://donormal.com" />
-	<updated>Thu, 24 Mar 2016 23:25:33 +0100</updated>
+	<updated>Thu, 02 Jun 2016 22:32:17 +0200</updated>
 
 	
 	<entry>
 		<title>Communication between CSS components</title>
 		<link href="http://donormal.com/writing/communication-between-css-components" />
 		<id>http://donormal.com/writing/communication-between-css-components</id>
-		<published>Thu, 24 Mar 2016 22:19:00 +0100</published>
+		<published>Thu, 02 Jun 2016 22:24:00 +0200</published>
 		
-		<content>&lt;p&gt;If you’re a developer that builds web interfaces, I assume you’ve divided that interface into separate components. When writing CSS, you&amp;rsquo;ve probably divided your codebase using that same structure. For example, the styling for your button component might be defined in a &lt;code&gt;button&lt;/code&gt; class. &lt;/p&gt;
+		<content>&lt;h2&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;Use CSS state modifiers to influence the styling of other components while maintaining separation of concerns in your CSS.&lt;/p&gt;
+
+&lt;h2&gt;Components&lt;/h2&gt;
+
+&lt;p&gt;Component-based design has many advantages. Elements are re-usable, changes are easier to implement et cetera. When writing CSS, you&amp;rsquo;ve probably divided your codebase using that same structure. For example, the styling for your button component might be defined in a &lt;code&gt;button&lt;/code&gt; class. &lt;/p&gt;
 
 &lt;p&gt;(If you&amp;rsquo;re unfamiliar with UI components: you should give it a try. Read these if you want more background information: &lt;a href=&quot;http://alistapart.com/article/from-pages-to-patterns-an-exercise-for-everyone&quot;&gt;From Pages to Patterns: An Exercise for Everyone&lt;/a&gt; and &lt;a href=&quot;http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/&quot;&gt;More Transparent UI Code with Namespaces&lt;/a&gt;.)&lt;/p&gt;
 
-&lt;p&gt;If set up correctly, components know nothing about other components. The advantage of this separation is that you can throw each component anywhere on a page. Changes to the design are also easier, as an adjustment to a component does not influence other components.&lt;/p&gt;
-
 &lt;h2&gt;The problem&lt;/h2&gt;
 
-&lt;p&gt;It becomes problematic when you want one component to influence other parts of the UI. I recently ran into this. I had a card component that contained a separate button. When hovered, the button changed colour. I wanted to trigger that hover style when the entire card was hovered.&lt;/p&gt;
+&lt;p&gt;If set up correctly, a single component know nothing about other components. It becomes problematic when you want one component to influence other parts of the UI. I recently ran into this. I had a card component that contained a separate button. When hovered, the button changed colour. I wanted to trigger that hover style when the entire card was hovered.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;.c-card { 
    &amp;amp;:hover {
@@ -45,7 +49,7 @@
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;These state modifier can also be used to trigger hover styles in a nested component. JS has a similar construct for events called &amp;ldquo;propagation&amp;rdquo;, so let&amp;rsquo;s steal that name and create a state modifier &lt;code&gt;has-hover-propagation&lt;/code&gt;. It works like this:&lt;/p&gt;
+&lt;p&gt;These state modifier can also be used to trigger hover styles in a nested component. JavaScript has a similar construct for events called &amp;ldquo;propagation&amp;rdquo;, so let&amp;rsquo;s steal that name and create a state modifier &lt;code&gt;has-hover-propagation&lt;/code&gt;. It works like this:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;.c-button {
    &amp;amp;:hover,
@@ -89,6 +93,8 @@
    }
 }
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The result is painless communication between different CSS components while keeping the code clean.&lt;/p&gt;
 </content>
 		<author>
       <name>Robert van Kempen</name>

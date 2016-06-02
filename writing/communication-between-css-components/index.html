@@ -14,7 +14,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@_dnrml">
     <meta name="twitter:title" content="Communication between CSS components">
-    <meta name="twitter:description" content="If you’re a developer that builds web interfaces, I assume you’ve divided that interface into separate components. When writing CSS, you&rsquo;ve probably divided your codebase using that same structure. For example, the styling for your button component might be defined in a button class. (If you&rsquo;re unfamiliar with UI components:...">
+    <meta name="twitter:description" content="Summary Use CSS state modifiers to influence the styling of other components while maintaining separation of concerns in your CSS. Components Component-based design has many advantages. Elements are re-usable, changes are easier to implement et cetera. When writing CSS, you&rsquo;ve probably divided your codebase using that same structure. For example,...">
     <meta name="twitter:creator" content="@_dnrml">
 
         <script src="//use.typekit.net/xef1kea.js"></script>
@@ -72,15 +72,19 @@
     
     
     <div class="post-body">
-        <p>If you’re a developer that builds web interfaces, I assume you’ve divided that interface into separate components. When writing CSS, you&rsquo;ve probably divided your codebase using that same structure. For example, the styling for your button component might be defined in a <code>button</code> class. </p>
+        <h2>Summary</h2>
+
+<p>Use CSS state modifiers to influence the styling of other components while maintaining separation of concerns in your CSS.</p>
+
+<h2>Components</h2>
+
+<p>Component-based design has many advantages. Elements are re-usable, changes are easier to implement et cetera. When writing CSS, you&rsquo;ve probably divided your codebase using that same structure. For example, the styling for your button component might be defined in a <code>button</code> class. </p>
 
 <p>(If you&rsquo;re unfamiliar with UI components: you should give it a try. Read these if you want more background information: <a href="http://alistapart.com/article/from-pages-to-patterns-an-exercise-for-everyone">From Pages to Patterns: An Exercise for Everyone</a> and <a href="http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/">More Transparent UI Code with Namespaces</a>.)</p>
 
-<p>If set up correctly, components know nothing about other components. The advantage of this separation is that you can throw each component anywhere on a page. Changes to the design are also easier, as an adjustment to a component does not influence other components.</p>
-
 <h2>The problem</h2>
 
-<p>It becomes problematic when you want one component to influence other parts of the UI. I recently ran into this. I had a card component that contained a separate button. When hovered, the button changed colour. I wanted to trigger that hover style when the entire card was hovered.</p>
+<p>If set up correctly, a single component know nothing about other components. It becomes problematic when you want one component to influence other parts of the UI. I recently ran into this. I had a card component that contained a separate button. When hovered, the button changed colour. I wanted to trigger that hover style when the entire card was hovered.</p>
 
 <pre><code>.c-card { 
    &amp;:hover {
@@ -104,7 +108,7 @@
 }
 </code></pre>
 
-<p>These state modifier can also be used to trigger hover styles in a nested component. JS has a similar construct for events called &ldquo;propagation&rdquo;, so let&rsquo;s steal that name and create a state modifier <code>has-hover-propagation</code>. It works like this:</p>
+<p>These state modifier can also be used to trigger hover styles in a nested component. JavaScript has a similar construct for events called &ldquo;propagation&rdquo;, so let&rsquo;s steal that name and create a state modifier <code>has-hover-propagation</code>. It works like this:</p>
 
 <pre><code>.c-button {
    &amp;:hover,
@@ -149,8 +153,10 @@
 }
 </code></pre>
 
+<p>The result is painless communication between different CSS components while keeping the code clean.</p>
+
     </div>
-    <p class="post-date-container">Published on <time datetime="2016-03-24 22:19:00 +0100" class="post-date">24 March, 2016</time></p>
+    <p class="post-date-container">Published on <time datetime="2016-06-02 22:24:00 +0200" class="post-date">02 June, 2016</time></p>
 
     
         

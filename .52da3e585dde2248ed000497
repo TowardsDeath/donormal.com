@@ -1,12 +1,12 @@
 ---
-time: 1458858334
+time: 1464899540
 inventory:
   "/home/index.html":
-    md5: c9c8a73bbd71bff4db39b31e154d9f40
-    time: 1458857751
+    md5: 18fffff081d224f86443fe1ae062c735
+    time: 1464899536
   "/index.html":
-    md5: c9c8a73bbd71bff4db39b31e154d9f40
-    time: 1458857751
+    md5: 18fffff081d224f86443fe1ae062c735
+    time: 1464899536
   "/who/index.html":
     md5: d6912e82ccc3facddea0452743fadccb
     time: 1458857355
@@ -14,11 +14,11 @@ inventory:
     md5: f5d89058dae29e1978453635644bc669
     time: 1458857355
   "/writing/index.html":
-    md5: ad034a6c3168ff54b83a17ca5fa5a3f0
-    time: 1458857355
+    md5: e2ad8487e373a482faa4a067a5cb747c
+    time: 1464899536
   "/writing/communication-between-css-components/index.html":
-    md5: 8e6caa6bbe20a07e134e068b3bedcc28
-    time: 1458858332
+    md5: 0f92dd03f6114f303cfe4ba4c985cbcc
+    time: 1464899536
   "/writing/talk-re-usable-and-scalable-css/index.html":
     md5: 5e42d316846557d52bebc02f39e9458d
     time: 1458857355
@@ -71,11 +71,11 @@ inventory:
     md5: fccaa07c5588d7d198a2aca0a4151449
     time: 1441048698
   "/sitemap.xml":
-    md5: 1025202f9af379199733bff9a80b97e0
-    time: 1458858333
+    md5: 2a3d8595b53356c8c6efeb914d02d93a
+    time: 1464899537
   "/feed.xml":
-    md5: 90f483901076024e357376b3e3459bb7
-    time: 1458858333
+    md5: 063dab8635b627080626ddf69cc233e2
+    time: 1464899537
   "/assets/photo-me.jpg":
     md5: f6b9317dd4ae7191d5528b12c9985827
     time: 1441048703
