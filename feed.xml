@@ -4,9 +4,48 @@
 	<title>Do Normal</title>
 	<link href="http://donormal.com/feed.xml" rel="self" />
 	<link href="http://donormal.com" />
-	<updated>Thu, 02 Jun 2016 22:32:17 +0200</updated>
+	<updated>Tue, 07 Jun 2016 12:24:10 +0200</updated>
 
 	
+	<entry>
+		<title>Flexbug: inline-block with flex children</title>
+		<link href="http://donormal.com/writing/flexbug-inline-block-with-flex-children" />
+		<id>http://donormal.com/writing/flexbug-inline-block-with-flex-children</id>
+		<published>Tue, 07 Jun 2016 12:23:00 +0200</published>
+		
+		<content>&lt;h2&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;In Internet Explorer 11 and Firefox 40, vertical alignment of inline-block elements is broken when one of those contains a flex element.&lt;br&gt;
+The workaround? Apply &lt;code&gt;vertical-align: middle&lt;/code&gt; to the parent of the flex item.&lt;/p&gt;
+
+&lt;h2&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;Early flexbox implementations can be fairly buggy, across all browsers. A lot of issues are documented by &lt;a href=&quot;https://philipwalton.com/&quot;&gt;Philip Walton&lt;/a&gt; in this &lt;a href=&quot;https://github.com/philipwalton/flexbugs&quot;&gt;comprehensive list of flexbugs and workarounds&lt;/a&gt;. The problem I encountered is not on that list, nor could I find any other bugs with a similar description.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s say you have two UI components:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/button--correct.png&quot; alt=&quot;button--correct&quot;&gt;  &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A hyperlink styled as a button.&lt;/li&gt;
+&lt;li&gt;Next to the hyperlink, a form with a single search field with a button added on.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The image above demonstrates the expected browser behaviour. Both the form and the link-button are styled with &lt;code&gt;display: inline-block&lt;/code&gt;. Inside the form is a wrapper-&lt;code&gt;div&lt;/code&gt; with &lt;code&gt;display: flex&lt;/code&gt;, containing an icon and an &lt;code&gt;input&lt;/code&gt; with &lt;code&gt;flex: 1 0 auto&lt;/code&gt;. (The latter is a standard pattern to create input add-ons, as specified by &lt;a href=&quot;https://philipwalton.github.io/solved-by-flexbox/demos/input-add-ons/&quot;&gt;Solved With Flexbox&lt;/a&gt;.)&lt;/p&gt;
+
+&lt;p&gt;However, Internet Explorer 11 and Firefox 40&amp;mdash;perhaps other browsers as well&amp;mdash;align the link-button partially below the search field:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/button--incorrect.png&quot; alt=&quot;button--incorrect&quot;&gt; &lt;/p&gt;
+
+&lt;p&gt;Luckily, there&amp;rsquo;s a simple workaroud: apply &lt;code&gt;vertical-align: middle&lt;/code&gt; to the parent of the flex item, in this case the &lt;code&gt;form&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you don&amp;rsquo;t like reading text and rather look at actual code, I created a &lt;a href=&quot;http://codepen.io/donormal/pen/ezpONd&quot;&gt;stripped-down demo on CodePen&lt;/a&gt;.&lt;/p&gt;
+</content>
+		<author>
+      <name>Robert van Kempen</name>
+    </author>
+	</entry>
+  
 	<entry>
 		<title>Communication between CSS components</title>
 		<link href="http://donormal.com/writing/communication-between-css-components" />

@@ -30,6 +30,12 @@
 		
 			
 				<url>
+					<loc>http://donormal.com/writing/flexbug-inline-block-with-flex-children</loc>
+					<lastmod>2016-06-07 10:23:56 +0000</lastmod>
+					<priority>0.5</priority>
+				</url>
+			
+				<url>
 					<loc>http://donormal.com/writing/communication-between-css-components</loc>
 					<lastmod>2016-06-02 20:32:12 +0000</lastmod>
 					<priority>0.5</priority>

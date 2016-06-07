@@ -1,0 +1,127 @@
+
+
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+        <title>Flexbug: inline-block with flex children • Do Normal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="alternate" type="application/rss+xml" href="http://donormal.com/feed.xml">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@_dnrml">
+    <meta name="twitter:title" content="Flexbug: inline-block with flex children">
+    <meta name="twitter:description" content="Summary In Internet Explorer 11 and Firefox 40, vertical alignment of inline-block elements is broken when one of those contains a flex element. The workaround? Apply vertical-align: middle to the parent of the flex item. Background Early flexbox implementations can be fairly buggy, across all browsers. A lot of issues...">
+    <meta name="twitter:creator" content="@_dnrml">
+
+        <script src="//use.typekit.net/xef1kea.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        <script src="/js/modernizr.custom.62890.js"></script>
+    </head>
+    
+    
+    <body class="page-writing ">
+        <div class="page-wrapper" role="main">
+            <div class="site-header-container">
+                <header class="site-header">
+    <div class="site-title">
+        <a href="/" class="site-title-link"><img src="/images/logo.svg" alt="Do Normal" class="site-logo"></a>
+    </div>
+
+    <nav class="site-navigation" role="menu">
+        <ul class="site-navigation-list">
+        
+            
+        
+            
+                <li class="site-navigation-item"><a href="/who" class="site-navigation-link ">Who?</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/work" class="site-navigation-link ">Work</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/writing" class="site-navigation-link is-current">Writing</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/store" class="site-navigation-link ">Webstore</a></li>
+            
+        
+        </ul>
+    </nav>
+</header>
+            </div>
+
+            <div class="page-content-container">
+                
+
+    <div class="page-title-container">
+    <h1 class="page-title">Flexbug: inline-block with flex children</h1>
+</div>
+
+    <div class="page-content">
+        <div class="page-content-main">
+            <article class="post">
+    
+    
+    <div class="post-body">
+        <h2>Summary</h2>
+
+<p>In Internet Explorer 11 and Firefox 40, vertical alignment of inline-block elements is broken when one of those contains a flex element.<br>
+The workaround? Apply <code>vertical-align: middle</code> to the parent of the flex item.</p>
+
+<h2>Background</h2>
+
+<p>Early flexbox implementations can be fairly buggy, across all browsers. A lot of issues are documented by <a href="https://philipwalton.com/">Philip Walton</a> in this <a href="https://github.com/philipwalton/flexbugs">comprehensive list of flexbugs and workarounds</a>. The problem I encountered is not on that list, nor could I find any other bugs with a similar description.</p>
+
+<p>Let&rsquo;s say you have two UI components:</p>
+
+<p><img src="/assets/button--correct.png" alt="button--correct">  </p>
+
+<ul>
+<li>A hyperlink styled as a button.</li>
+<li>Next to the hyperlink, a form with a single search field with a button added on.</li>
+</ul>
+
+<p>The image above demonstrates the expected browser behaviour. Both the form and the link-button are styled with <code>display: inline-block</code>. Inside the form is a wrapper-<code>div</code> with <code>display: flex</code>, containing an icon and an <code>input</code> with <code>flex: 1 0 auto</code>. (The latter is a standard pattern to create input add-ons, as specified by <a href="https://philipwalton.github.io/solved-by-flexbox/demos/input-add-ons/">Solved With Flexbox</a>.)</p>
+
+<p>However, Internet Explorer 11 and Firefox 40&mdash;perhaps other browsers as well&mdash;align the link-button partially below the search field:</p>
+
+<p><img src="/assets/button--incorrect.png" alt="button--incorrect"> </p>
+
+<p>Luckily, there&rsquo;s a simple workaroud: apply <code>vertical-align: middle</code> to the parent of the flex item, in this case the <code>form</code>.</p>
+
+<p>If you don&rsquo;t like reading text and rather look at actual code, I created a <a href="http://codepen.io/donormal/pen/ezpONd">stripped-down demo on CodePen</a>.</p>
+
+    </div>
+    <p class="post-date-container">Published on <time datetime="2016-06-07 12:23:00 +0200" class="post-date">07 June, 2016</time></p>
+
+    
+        
+    
+        
+    
+
+    
+
+    <!--<a class='next nav-icon ss-icon' href='' style='visibility: hidden'>navigateleft</a>
+    <a class='previous nav-icon ss-icon' href='/writing/communication-between-css-components' style='visibility: visible'>navigateright</a>-->
+</article>
+        </div>
+
+        
+    </div>
+
+    <div class="social-footer">
+    <p>Follow <a href="https://twitter.com/@_dnrml" class="social-footer-link">@_dnrml</a> on Twitter.</p>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>
