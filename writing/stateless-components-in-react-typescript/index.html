@@ -1,0 +1,158 @@
+
+
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+        <title>Stateless components in React & TypeScript • Do Normal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="alternate" type="application/rss+xml" href="http://donormal.com/feed.xml">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" type="image/png" href="/images/favicon.png">
+        
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@_dnrml">
+    <meta name="twitter:title" content="Stateless components in React & TypeScript">
+    <meta name="twitter:description" content="When you&rsquo;re working with React, one of the benefits is the ability to make functional and pure UI components. This separates the state and flow from the actual design, which is generally a good thing. It&rsquo;s very easy to make such a component. import React from &lsquo;react&rsquo; const Button =...">
+    <meta name="twitter:creator" content="@_dnrml">
+
+        <script src="//use.typekit.net/xef1kea.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+        <script src="/js/modernizr.custom.62890.js"></script>
+    </head>
+    
+    
+    <body class="page-writing ">
+        <div class="page-wrapper" role="main">
+            <div class="site-header-container">
+                <header class="site-header">
+    <div class="site-title">
+        <a href="/" class="site-title-link"><img src="/images/logo.svg" alt="Do Normal" class="site-logo"></a>
+    </div>
+
+    <nav class="site-navigation" role="menu">
+        <ul class="site-navigation-list">
+        
+            
+        
+            
+                <li class="site-navigation-item"><a href="/who" class="site-navigation-link ">Who?</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/work" class="site-navigation-link ">Work</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/writing" class="site-navigation-link is-current">Writing</a></li>
+            
+        
+            
+                <li class="site-navigation-item"><a href="/store" class="site-navigation-link ">Webstore</a></li>
+            
+        
+        </ul>
+    </nav>
+</header>
+            </div>
+
+            <div class="page-content-container">
+                
+
+    <div class="page-title-container">
+    <h1 class="page-title">Stateless components in React & TypeScript</h1>
+</div>
+
+    <div class="page-content">
+        <div class="page-content-main">
+            <article class="post">
+    
+    
+    <div class="post-body">
+        <p>When you&rsquo;re working with React, one of the benefits is the ability to make functional and pure UI components. This separates the state and flow from the actual design, which is generally a good thing.</p>
+
+<p>It&rsquo;s very easy to make such a component.</p>
+
+<pre><code>import React from &#39;react&#39;
+
+const Button = ({
+  type
+  ...props
+}) =&gt; {
+   return (
+      &lt;button type={props.type} {...props} /&gt;
+   )
+}
+
+Button.defaultProps = {
+   type: &#39;button&#39;
+}
+
+export { Button }
+</code></pre>
+
+<p>When you&rsquo;re working with TypeScript, every piece of code must have a type, your new shiny stateless component as well. </p>
+
+<p>That’s easier said than done. I couldn&rsquo;t find a good example and had to piece together several resources, like GitHub issues on the TypeScript repository and the React typings file.</p>
+
+<p>I’ve managed to get it working, so I hope you find this before you got frustrated and quit your job.</p>
+
+<pre><code>import React from &#39;react&#39;
+
+const Button : React.StatelessComponent&lt;React.HTMLProps&lt;JSX.Element&gt;&gt; = (props: React.HTMLProps&lt;JSX.Element&gt; &amp; {
+    type?:string,
+    onClick?:Function
+}) =&gt; {
+    return (
+        &lt;button onClick={props.onClick}
+            type={props.type}&gt;
+            {props.children}
+        &lt;/button&gt;
+    )
+}
+
+Button.defaultProps = {
+    type: &#39;button&#39;
+}
+
+export { Button }
+</code></pre>
+
+<p>A few notes:</p>
+
+<ul>
+<li>The React documentation and most articles use the object spread operator (<code>{ ...props }</code>) as arguments to a function. Currently, Typescript 2.0 does not support that. It&rsquo;s better to supply each property as a separate argument so you can define the type. Support is coming in version 2.1 if you want to use it anyway.</li>
+<li>You have to implement the interface <code>React.StatelessComponent</code> otherwise constructs like <code>Button.defaultProps</code> don&rsquo;t work.</li>
+<li>The component should expect a <code>React.HTMLProps&lt;JSX.Element&gt;</code> so you can use both regular HTML and React-specific attributes, like <code>ref</code> and <code>children</code>.</li>
+</ul>
+
+<p>If you have any improvements or comments, feel free to send me a message.</p>
+
+    </div>
+    <p class="post-date-container">Published on <time datetime="2016-09-29 12:53:00 +0200" class="post-date">29 September, 2016</time></p>
+
+    
+        
+    
+        
+    
+
+    
+
+    <!--<a class='next nav-icon ss-icon' href='' style='visibility: hidden'>navigateleft</a>
+    <a class='previous nav-icon ss-icon' href='/writing/flexbug-inline-block-with-flex-children' style='visibility: visible'>navigateright</a>-->
+</article>
+        </div>
+
+        
+    </div>
+
+    <div class="social-footer">
+    <p>Follow <a href="https://twitter.com/@_dnrml" class="social-footer-link">@_dnrml</a> on Twitter.</p>
+</div>
+
+            </div>
+        </div>
+    </body>
+</html>

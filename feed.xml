@@ -4,9 +4,79 @@
 	<title>Do Normal</title>
 	<link href="http://donormal.com/feed.xml" rel="self" />
 	<link href="http://donormal.com" />
-	<updated>Tue, 07 Jun 2016 12:24:10 +0200</updated>
+	<updated>Thu, 29 Sep 2016 13:15:10 +0200</updated>
 
 	
+	<entry>
+		<title>Stateless components in React &amp; TypeScript</title>
+		<link href="http://donormal.com/writing/stateless-components-in-react-typescript" />
+		<id>http://donormal.com/writing/stateless-components-in-react-typescript</id>
+		<published>Thu, 29 Sep 2016 12:53:00 +0200</published>
+		
+		<content>&lt;p&gt;When you&amp;rsquo;re working with React, one of the benefits is the ability to make functional and pure UI components. This separates the state and flow from the actual design, which is generally a good thing.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s very easy to make such a component.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import React from &amp;#39;react&amp;#39;
+
+const Button = ({
+  type
+  ...props
+}) =&amp;gt; {
+   return (
+      &amp;lt;button type={props.type} {...props} /&amp;gt;
+   )
+}
+
+Button.defaultProps = {
+   type: &amp;#39;button&amp;#39;
+}
+
+export { Button }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you&amp;rsquo;re working with TypeScript, every piece of code must have a type, your new shiny stateless component as well. &lt;/p&gt;
+
+&lt;p&gt;That’s easier said than done. I couldn&amp;rsquo;t find a good example and had to piece together several resources, like GitHub issues on the TypeScript repository and the React typings file.&lt;/p&gt;
+
+&lt;p&gt;I’ve managed to get it working, so I hope you find this before you got frustrated and quit your job.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import React from &amp;#39;react&amp;#39;
+
+const Button : React.StatelessComponent&amp;lt;React.HTMLProps&amp;lt;JSX.Element&amp;gt;&amp;gt; = (props: React.HTMLProps&amp;lt;JSX.Element&amp;gt; &amp;amp; {
+    type?:string,
+    onClick?:Function
+}) =&amp;gt; {
+    return (
+        &amp;lt;button onClick={props.onClick}
+            type={props.type}&amp;gt;
+            {props.children}
+        &amp;lt;/button&amp;gt;
+    )
+}
+
+Button.defaultProps = {
+    type: &amp;#39;button&amp;#39;
+}
+
+export { Button }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A few notes:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The React documentation and most articles use the object spread operator (&lt;code&gt;{ ...props }&lt;/code&gt;) as arguments to a function. Currently, Typescript 2.0 does not support that. It&amp;rsquo;s better to supply each property as a separate argument so you can define the type. Support is coming in version 2.1 if you want to use it anyway.&lt;/li&gt;
+&lt;li&gt;You have to implement the interface &lt;code&gt;React.StatelessComponent&lt;/code&gt; otherwise constructs like &lt;code&gt;Button.defaultProps&lt;/code&gt; don&amp;rsquo;t work.&lt;/li&gt;
+&lt;li&gt;The component should expect a &lt;code&gt;React.HTMLProps&amp;lt;JSX.Element&amp;gt;&lt;/code&gt; so you can use both regular HTML and React-specific attributes, like &lt;code&gt;ref&lt;/code&gt; and &lt;code&gt;children&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you have any improvements or comments, feel free to send me a message.&lt;/p&gt;
+</content>
+		<author>
+      <name>Robert van Kempen</name>
+    </author>
+	</entry>
+  
 	<entry>
 		<title>Flexbug: inline-block with flex children</title>
 		<link href="http://donormal.com/writing/flexbug-inline-block-with-flex-children" />

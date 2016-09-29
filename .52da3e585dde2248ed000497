@@ -1,12 +1,12 @@
 ---
-time: 1465295060
+time: 1475147715
 inventory:
   "/home/index.html":
-    md5: 5e0384567cc89926fb7cbba8ffac099e
-    time: 1465295049
+    md5: 20c19376f80dc6ef3f499d06e75bfd85
+    time: 1475147708
   "/index.html":
-    md5: 5e0384567cc89926fb7cbba8ffac099e
-    time: 1465295049
+    md5: 20c19376f80dc6ef3f499d06e75bfd85
+    time: 1475147708
   "/who/index.html":
     md5: d6912e82ccc3facddea0452743fadccb
     time: 1458857355
@@ -14,11 +14,14 @@ inventory:
     md5: f35e2dcdd15cb1b1660f7c94d01ab9f6
     time: 1465295049
   "/writing/index.html":
-    md5: a97931a9a702cf1a239de855da60a39f
-    time: 1465295049
+    md5: d9c1fe294fe32d31fbed5b730f405efd
+    time: 1475147709
+  "/writing/stateless-components-in-react-typescript/index.html":
+    md5: f968a2823866ded561b496bacb4399bb
+    time: 1475147709
   "/writing/flexbug-inline-block-with-flex-children/index.html":
-    md5: 07ea49202d50597788f1289244223bcc
-    time: 1465295049
+    md5: 316c89435b93735ada8828abd2f6fe73
+    time: 1475147709
   "/writing/communication-between-css-components/index.html":
     md5: f702c77ff22f5bf606783052471f25d3
     time: 1465295049
@@ -62,23 +65,23 @@ inventory:
     md5: 7fabdb8c39d7ee2177dd47f384ba0242
     time: 1441048697
   "/work/firenoord/index.html":
-    md5: 92fc1da3aaa07dd6df59542a90286bb2
-    time: 1465295050
+    md5: cb154130cbbdfdf9ffc273a786b0afba
+    time: 1475147710
   "/work/logos/index.html":
-    md5: 99d2de797de939f97fae1bcfa54d6e91
-    time: 1465295050
+    md5: 2383c7fedd208e5fbbce997503d9abea
+    time: 1475147710
   "/work/rotterdam-abstract/index.html":
-    md5: fc0b90b7c87458c39283d05358352d41
-    time: 1465295050
+    md5: 6dcbe676f760a641baf4c54225a94f37
+    time: 1475147710
   "/CNAME":
     md5: fccaa07c5588d7d198a2aca0a4151449
     time: 1441048698
   "/sitemap.xml":
-    md5: 565d95b94185c61d4b2dd37676aa4505
-    time: 1465295050
+    md5: 89be1477f56704f724178a48738f288a
+    time: 1475147710
   "/feed.xml":
-    md5: 8525d16bfba8ec6e04394dfacbe3fd8a
-    time: 1465295050
+    md5: cc56654ffabe7d4f9781cab1d4fb3712
+    time: 1475147710
   "/assets/photo-me.jpg":
     md5: f6b9317dd4ae7191d5528b12c9985827
     time: 1441048703
