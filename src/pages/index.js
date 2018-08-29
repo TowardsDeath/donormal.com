@@ -24,9 +24,9 @@ const IndexPage = ({ data }) => {
       </div>
     </SplitContainer>
   )
-}
+};
 
-export default IndexPage
+export default IndexPage;
 
 export const query = graphql`
   query IndexQuery {
@@ -36,4 +36,4 @@ export const query = graphql`
         ...markdown_node
       }
     }
-  }`
+  }`;

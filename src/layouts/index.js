@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Provider } from 'rebass';
-import { injectGlobal } from 'styled-components'
+import { injectGlobal } from 'styled-components';
 
 injectGlobal`
   * { box-sizing: border-box; }
@@ -38,4 +38,4 @@ TemplateWrapper.propTypes = {
   children: PropTypes.func,
 }
 
-export default TemplateWrapper
+export default TemplateWrapper;
