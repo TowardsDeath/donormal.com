@@ -1,0 +1,60 @@
+donormal
+Robert van Kempen
+Developer
+Rotterdam
+==================================================================
+https://keybase.io/donormal
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://donormal.com
+  * I am donormal (https://keybase.io/donormal) on keybase.
+  * I have a public key ASB4gwRND0EgPRZ1zSAK_KvFVtUkmLEx8BNe8ndK3MkSbQo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01207883044d0f41203d1675cd200afcabc556d52498b131f0135ef2774adcc9126d0a",
+      "host": "keybase.io",
+      "kid": "01207883044d0f41203d1675cd200afcabc556d52498b131f0135ef2774adcc9126d0a",
+      "uid": "021fef0a4b683f17437499fd27090d19",
+      "username": "donormal"
+    },
+    "merkle_root": {
+      "ctime": 1568191743,
+      "hash": "387c40161dea26d6d2993fd2443963f6c71572b1445c4b793f4fdab328ba41f8ca8f967c3c5775acdd767241c98999ba8720eb279b982bca2476d0f7bf6f2b9e",
+      "hash_meta": "96d6da6b51d658e7dabd9cca4c49a4e5ee5faedd41159f4f7c3b7155f2cbe6e4",
+      "seqno": 6649662
+    },
+    "service": {
+      "entropy": "fz3Uj2r9cG2kyX7CfmHn+cXn",
+      "hostname": "donormal.com",
+      "protocol": "http:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "4.4.1"
+  },
+  "ctime": 1568191746,
+  "expire_in": 504576000,
+  "prev": "556f0117e6f622b088450d5515ec77aa692c74e68983785f5fac6623d018de0d",
+  "seqno": 15,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgeIMETQ9BID0Wdc0gCvyrxVbVJJixMfATXvJ3StzJEm0Kp3BheWxvYWTESpcCD8QgVW8BF+b2IrCIRQ1VFex3qmksdOaJg3hfX6xmI9AY3g3EIPgqG+Z3DAYeWKsRzc0G4EiPvSqKsL2nWALTUotPduqlAgHCo3NpZ8RA+oLrv2wqDrL4UVPdEpicF+gwYdZ45PZ8LsEK4tecm2FabMVw+nmYhYa2TlaVNusufGPLkhY0HFSuDgutvduFBKhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEILhiMOQ81IKCKRVxls119HtaJ2zcOjAsNg1H9xBhEIz1o3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/donormal
+
+==================================================================
